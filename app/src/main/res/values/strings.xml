@@ -1,0 +1,11 @@
+<resources>
+    <string name="APP_NAME">AtmoDrive</string>
+    <string name="PHONE_NUM">Phone Number</string>
+    <string name="F_LOGIN">Enter mobile number to find your account or create a new one. </string>
+    <string name="INTRO_TEXT">Looking for a ride? Try AtmoDrive and Book now!</string>
+    <string name="TermAndPrivacy">By continuing, you agree to AtmoDrive\'s <font color="#00A6A6"><u> Terms &amp; Conditions</u> </font> and <font color="#00A6A6"><u> Privacy Policy</u> </font></string>
+    <string name="verify_existance_text">Hello<font color="#00A6A6"><u> Mohamed</u> </font>. Enter the OTP code sent to you at mobile number <font color="#00A6A6"><u>+20 114 933 6618</u> </font></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

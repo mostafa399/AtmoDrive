@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/intro"
+        android:name="com.mostafahelal.AtmoDrive.Intro"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_intro_to_login"
+            app:destination="@id/login" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.mostafahelal.AtmoDrive.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_verify_NewUser"
+            app:destination="@id/verify_NewUser" />
+    </fragment>
+    <fragment
+        android:id="@+id/verify_NewUser"
+        android:name="com.mostafahelal.AtmoDrive.Verify"
+        android:label="fragment_verify__new_user"
+        tools:layout="@layout/fragment_verify" >
+        <action
+            android:id="@+id/action_verify_NewUser_to_createAccount"
+            app:destination="@id/createAccount" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccount"
+        android:name="com.mostafahelal.AtmoDrive.CreateAccount"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.mostafahelal.AtmoDrive.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_intro"
+            app:destination="@id/intro" />
+        <action
+            android:id="@+id/action_splashFragment_to_login"
+            app:destination="@id/login" />
+    </fragment>
+</navigation>
