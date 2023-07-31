@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/intro"
-        android:name="com.mostafahelal.AtmoDrive.Intro"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Intro"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.mostafahelal.AtmoDrive.Login"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -25,21 +25,28 @@
     </fragment>
     <fragment
         android:id="@+id/verify_NewUser"
-        android:name="com.mostafahelal.AtmoDrive.Verify"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Verify"
         android:label="fragment_verify__new_user"
         tools:layout="@layout/fragment_verify" >
         <action
             android:id="@+id/action_verify_NewUser_to_createAccount"
             app:destination="@id/createAccount" />
+        <action
+            android:id="@+id/action_verify_NewUser_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccount"
-        android:name="com.mostafahelal.AtmoDrive.CreateAccount"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.CreateAccount"
         android:label="fragment_create_account"
-        tools:layout="@layout/fragment_create_account" />
+        tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/action_createAccount_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.mostafahelal.AtmoDrive.SplashFragment"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -48,5 +55,13 @@
         <action
             android:id="@+id/action_splashFragment_to_login"
             app:destination="@id/login" />
+        <action
+            android:id="@+id/action_splashFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

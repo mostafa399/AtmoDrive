@@ -1,25 +1,24 @@
-package com.mostafahelal.AtmoDrive
+package com.mostafahelal.AtmoDrive.auth.presentation.view
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.mostafahelal.AtmoDrive.R
+import com.mostafahelal.AtmoDrive.databinding.FragmentIntroBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class Intro : Fragment() {
     private lateinit var spannableColorChanged: SpannableColorChanged
+    private lateinit var introBinding:FragmentIntroBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        val view=  inflater.inflate(R.layout.fragment_intro, container, false)
@@ -29,13 +28,12 @@ class Intro : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navigationController=findNavController()
-        val imageForward=view.findViewById<ImageView>(R.id.imageforward)
-        imageForward.setOnClickListener{
-            navigationController.navigate(R.id.action_intro_to_login)
+        introBinding=FragmentIntroBinding.bind(view)
+        introBinding.imageforward.setOnClickListener {
+            findNavController().navigate(R.id.action_intro_to_login)
         }
 
-        spannableColorChanged=SpannableColorChanged(view)
+        spannableColorChanged= SpannableColorChanged(view)
         spannableColorChanged.applySpannableText()
     }
     class SpannableColorChanged(private val view: View) {

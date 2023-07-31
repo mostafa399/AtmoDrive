@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundLogin"
          style="@style/Base.Theme.AtmoDrive"
-        tools:context=".Login">
+        tools:context=".auth.presentation.view.Login">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_marginTop="@dimen/_15sdp"
@@ -29,7 +29,6 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,13 +67,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <com.hbb20.CountryCodePicker
-                    android:id="@+id/ccp"
-                    app:ccp_contentColor="@color/colorText4"
                     app:ccpDialog_textColor="@color/colorText"
+                    app:ccp_arrowColor="@color/colorText"
+                    app:ccp_contentColor="@color/colorText4"
+                    android:id="@+id/ccp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    app:ccp_flagBorderColor="@color/black"
                     app:ccp_showArrow="true"
                     app:ccp_showFlag="true"
+                    app:ccp_useFlagEmoji="true"
                     android:gravity="center"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
@@ -82,10 +84,12 @@
                     app:ccp_showNameCode="false"/>
                 <EditText
 
+                    android:id="@+id/phone_et"
+                    android:textColor="@color/colorText"
                     android:background="@drawable/phonever_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:layout_gravity="center"
                     android:padding="15dp"
                     android:layout_marginEnd="5dp"
@@ -110,8 +114,6 @@
                 android:id="@+id/continue_button"
                 android:background="@drawable/firstbuttonback"
                 android:text="Continue"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

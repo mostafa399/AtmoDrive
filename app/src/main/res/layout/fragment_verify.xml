@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundLogin"
-    tools:context=".Verify">
+    tools:context=".auth.presentation.view.Verify">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_marginTop="@dimen/_15sdp"
@@ -59,10 +59,6 @@
 
         <com.mukeshsolanki.OtpView
             android:id="@+id/pinView2"
-            android:hint="____"
-            android:textColor="@color/colorText"
-            app:OtpLineColor="@color/colorText4"
-            android:textColorHint="@color/colorText4"
             style="@style/PinWidget.PinView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,12 +66,16 @@
             android:layout_marginTop="50dp"
             android:cursorVisible="true"
             android:gravity="center"
+            android:hint="____"
             android:inputType="number"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText4"
+            app:OtpLineColor="@color/colorText4"
+            app:OtpViewType="line"
             app:hideLineWhenFilled="false"
             app:itemCount="4"
             app:itemHeight="50dp"
             app:itemRadius="10dp"
-            app:OtpViewType="line"
             app:itemWidth="70dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
