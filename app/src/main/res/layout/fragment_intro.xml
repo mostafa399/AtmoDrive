@@ -27,7 +27,7 @@
             app:layout_constraintTop_toBottomOf="@+id/gide"
             android:id="@+id/imageView"
             android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_75sdp"
+            android:layout_height="@dimen/_77sdp"
             android:src="@drawable/logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
