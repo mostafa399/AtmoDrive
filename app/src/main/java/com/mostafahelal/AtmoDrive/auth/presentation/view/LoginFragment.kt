@@ -9,16 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
-import com.mostafahelal.AtmoDrive.auth.presentation.view_model.AuthViewModel
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SendPhoneViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 

@@ -35,20 +35,15 @@ class CheckCodeViewModel @Inject constructor(
                      when (result) {
                          is Resource.Error -> {
                              Log.i("CheckCodeViewModel", "Error ${result.message}")
-
                          }
                          is  Resource.Success -> {
-                             _NavigateToRegister.value = NetworkState.getLoaded(result)
-                             if (result.data?.isNew!=null  ){
-                                 _NavigateToRegister.value = NetworkState.getLoaded(result)
-                             }else if (result.data?.data!=null)  {
-                                 _NavigateToMain.value = NetworkState.getLoaded(result)
+                             if (result.data?.isNew==true &&result.data.status==1  ){
+                                 _NavigateToRegister.value = NetworkState.getLoaded(result.data.isNew==true)
+                             }else if (result.data?.data!=null &&result.data.status==1)  {
+                                 _NavigateToMain.value = NetworkState.getLoaded(result.data.isNew==null)
                              }else{
                                 NetworkState.getErrorMessage(result.message.toString())
                              }
-
-                           //  successful.postValue(true)
-                            // saveUserAccessToken("${result.data?.data?.rememberToken}")
                              Log.i("CheckCodeViewModel", "Success ${result.data?.message}")
                          }
                      }

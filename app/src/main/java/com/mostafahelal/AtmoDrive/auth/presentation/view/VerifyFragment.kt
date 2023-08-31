@@ -47,6 +47,21 @@ class VerifyFragment : Fragment() {
                 viewModel.checkCode(result)
             lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                    viewModel.navigateToRegister.collect{networkState->
+                    when(networkState?.status){
+                        NetworkState.Status.SUCCESS->{
+                            val action=VerifyFragmentDirections.actionVerifyNewUserToCreateAccount()
+                            findNavController().navigate(action)
+                        }
+
+                        else -> Unit
+                    }
+
+                    }
+
+                }
+            }
+                lifecycleScope.launch {  viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                     viewModel.navigateToMain.collect{networkState->
                         when(networkState?.status){
                             NetworkState.Status.SUCCESS->{
@@ -58,46 +73,10 @@ class VerifyFragment : Fragment() {
                         }
 
                     }
-
                 }
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                    viewModel.navigateToRegister.collect{networkState->
-                        when(networkState?.status){
-                            NetworkState.Status.SUCCESS->{
-                                val action=VerifyFragmentDirections.actionVerifyNewUserToCreateAccount()
-                                findNavController().navigate(action)
-                            }
-
-                            else -> Unit
-                        }
-
-                    }
             }
-//                viewModel.navigateToCreatePassenger.observe(viewLifecycleOwner){navigate->
-//                    if (navigate){
-//                        findNavController().navigate(R.id.action_verify_NewUser_to_createAccount)
-//                        viewModel.onNavigateToCreatePassengerComplete()
-//                        println("DATA SENT $result")
-//                    }
-//
-//                }
-//                viewModel.navigateToRegisterPassenger.observe(viewLifecycleOwner){navigate->
-//                    if (navigate){
-//                        findNavController().navigate(R.id.action_verify_NewUser_to_mapsFragment)
-//                        viewModel.onNavigateToRegisterPassengerComplete()
-//                        println("DATA SENT $result")
-//
-//                    }
-//
-//                }
-//                }else{
-//                Snackbar.make(verifyBinding.continueVerifyButton,"Error", Snackbar.LENGTH_SHORT).show()
-//
-//            }
-//
-//            }
+
 
         }
-}
 }
 }
