@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/introScreen_background"
-    tools:context=".auth.presentation.view.Intro">
+    tools:context=".auth.presentation.view.IntroFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"

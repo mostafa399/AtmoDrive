@@ -6,6 +6,7 @@ import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.RemoteAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -14,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
     @Provides
-    @Singleton
     fun provideRemoteData(apiServices: ApiServices):IRemoteAuth{
         return RemoteAuth(apiServices=apiServices)
     }

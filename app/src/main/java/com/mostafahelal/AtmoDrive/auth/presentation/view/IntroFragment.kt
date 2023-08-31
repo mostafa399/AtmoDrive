@@ -6,7 +6,6 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,16 +15,14 @@ import com.mostafahelal.AtmoDrive.databinding.FragmentIntroBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class Intro : Fragment() {
+class IntroFragment : Fragment() {
     private lateinit var spannableColorChanged: SpannableColorChanged
     private lateinit var introBinding:FragmentIntroBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        val view=  inflater.inflate(R.layout.fragment_intro, container, false)
         return view
-
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         introBinding=FragmentIntroBinding.bind(view)
@@ -48,6 +45,7 @@ class Intro : Fragment() {
             val foregroundColorSpan = ForegroundColorSpan(color)
             spannableStringBuilder.setSpan(foregroundColorSpan, start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
             textView.text = spannableStringBuilder
-        } }
+        }
+    }
 
 }

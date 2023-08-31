@@ -6,6 +6,8 @@ import com.mostafahelal.AtmoDrive.auth.domain.use_case.AuthUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -13,7 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UseCaeModule {
     @Provides
-    @Singleton
     fun provideAuthUseCase(authRepository: AuthRepository):AuthUseCase{
         return AuthUseCase(authRepository=authRepository)
     }

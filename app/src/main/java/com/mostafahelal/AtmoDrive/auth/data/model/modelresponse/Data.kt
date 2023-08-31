@@ -3,31 +3,31 @@ package com.mostafahelal.AtmoDrive.auth.data.model.modelresponse
 
 import com.google.gson.annotations.SerializedName
 
-data class DataX(
+data class Data(
     @SerializedName("avatar")
-    val avatar: String? = "",
+    val avatar: String?,
     @SerializedName("email")
-    val email: Any? = Any(),
+    val email: String?,
     @SerializedName("full_name")
-    val fullName: String? = "",
+    val fullName: String?,
     @SerializedName("is_dark_mode")
-    val isDarkMode: Int? = 0,
+    val isDarkMode: Int?,
     @SerializedName("lang")
-    val lang: String? = "",
+    val lang: String?,
     @SerializedName("mobile")
-    val mobile: String? = "",
+    val mobile: String?,
     @SerializedName("options")
-    val options: OptionsX? = OptionsX(),
+    val options: Options? ,
     @SerializedName("passenger_code")
-    val passengerCode: String? = "",
+    val passengerCode: String?,
     @SerializedName("rate")
-    val rate: Int? = 0,
+    val rate: Int?,
     @SerializedName("remember_token")
-    val rememberToken: String? = "",
+    val rememberToken: String?,
     @SerializedName("shake_phone")
-    val shakePhone: Int? = 0,
+    val shakePhone: Int?,
     @SerializedName("status")
-    val status: Int? = 0,
+    val status: Int?,
     @SerializedName("suspend")
-    val suspend: Int? = 0
+    val suspend: Int?
 )

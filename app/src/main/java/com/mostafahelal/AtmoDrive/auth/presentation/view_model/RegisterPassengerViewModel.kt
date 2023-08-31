@@ -27,9 +27,6 @@ class RegisterPassengerViewModel @Inject constructor(
     fun registerPassenger(Passenger: RegisterPassengerRequest){
         authUseCase.RegisterPassenger(passenger = Passenger).onEach {result->
             when (result) {
-                is Resource.Loading -> {
-                    Log.i("LoginViewModel", "I dey here, Loading")
-                }
                 is Resource.Error -> {
                     error.postValue("${result.message}")
                     successful.postValue(false)
@@ -38,7 +35,7 @@ class RegisterPassengerViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     successful.postValue(true)
-                    Log.i("LoginViewModel", "I dey here, Success ${result.data?.data?.status}")
+                    Log.i("LoginViewModel", "I dey here, Success ${result.data?.data?.fullName}")
                 }
             }
 

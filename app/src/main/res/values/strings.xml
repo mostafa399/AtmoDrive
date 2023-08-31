@@ -7,5 +7,6 @@
     <string name="verify_existance_text">Hello<font color="#00A6A6"><u> Mohamed</u> </font>. Enter the OTP code sent to you at mobile number <font color="#00A6A6"><u>+20 114 933 6618</u> </font></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phonenumber">phoneNumber</string>
 
 </resources>

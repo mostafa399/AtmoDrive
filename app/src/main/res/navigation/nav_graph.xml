@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/intro"
-        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Intro"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Login"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -25,19 +25,23 @@
     </fragment>
     <fragment
         android:id="@+id/verify_NewUser"
-        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.Verify"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.VerifyFragment"
         android:label="fragment_verify__new_user"
         tools:layout="@layout/fragment_verify" >
+
         <action
             android:id="@+id/action_verify_NewUser_to_createAccount"
             app:destination="@id/createAccount" />
         <action
             android:id="@+id/action_verify_NewUser_to_mapsFragment"
             app:destination="@id/mapsFragment" />
+        <argument
+            android:name="mobilePhone"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/createAccount"
-        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.CreateAccount"
+        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action

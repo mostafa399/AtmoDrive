@@ -13,41 +13,19 @@ import javax.inject.Inject
 
 
 class AuthRepositoryImpl @Inject constructor(private val iRemoteAuth: IRemoteAuth):AuthRepository {
-    private fun responseCheckCode(response: Response<CheckCodeResponse>) : Resource<CheckCodeResponse>{
-        if (response.isSuccessful){
-            response.body()?.let { result->
-                return Resource.Success(result)
-            }
-        }
-        return Resource.Error(message = "${response.errorBody()?.string()}")
-    }
-    private fun responseRegister(response : Response<RegisterPassengerResponse>) : Resource<RegisterPassengerResponse>{
-        if (response.isSuccessful){
-            response.body()?.let { result->
-                return Resource.Success(result)
-            }
-        }
-        return Resource.Error(message = "${response.errorBody()?.string()}")
-    }
-
-    private fun responseSendCode(response: Response<SendCodeResponse>) : Resource<SendCodeResponse>{
-        if (response.isSuccessful){
-            response.body()?.let {
-                return Resource.Success(it)
-            }
-        }
-        return Resource.Error(message = "${response.errorBody()?.string()}")
-    }
-    override suspend fun sendCode(request: SendCodeRequest): Resource<SendCodeResponse> {
-        return responseSendCode(iRemoteAuth.sendCode(request=request))
+    override suspend fun sendCode(phone: String): Resource<SendCodeResponse> {
+        val response=iRemoteAuth.sendCode(phone)
+        return response
     }
 
     override suspend fun checkCode(request: CheckCodeRequest): Resource<CheckCodeResponse> {
-      return responseCheckCode(iRemoteAuth.checkCode(request=request))
+        val response=iRemoteAuth.checkCode(request)
+        return response
     }
 
-    override suspend fun registerPassenger(request: RegisterPassengerRequest): Resource<RegisterPassengerResponse> {
-        return responseRegister(iRemoteAuth.registerPassenger(request=request))
+    override suspend fun registerPassenger(request: RegisterPassengerRequest): Resource<RegisterPassengerResponse>{
+        val response=iRemoteAuth.registerPassenger(request=request)
+        return response
     }
 
 }

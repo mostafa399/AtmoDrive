@@ -1,6 +1,5 @@
-package com.mostafahelal.AtmoDrive.auth.di
+package com.mostafahelal.AtmoDrive.Atmo_di
 
-import com.mostafahelal.AtmoDrive.auth.common.Const
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
 import dagger.Module
 import dagger.Provides
@@ -12,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-
+const val BASE_URL="https://s1.drive.api.atmosphere.solutions/api/v1/passengers/"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
@@ -31,7 +30,7 @@ object NetWorkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit{
           return Retrofit.Builder()
-              .baseUrl(Const.BASE_URL)
+              .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

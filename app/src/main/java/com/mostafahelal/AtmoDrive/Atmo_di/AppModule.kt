@@ -1,4 +1,4 @@
-package com.mostafahelal.AtmoDrive.auth.di
+package com.mostafahelal.AtmoDrive.Atmo_di
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName
 
 data class RegisterPassengerRequest(
     @SerializedName("avatar")
-    val avatar: String? = null,
+    val avatar: String?,
     @SerializedName("device_id")
-    val deviceId: String? = null,
+    val deviceId: String?,
     @SerializedName("device_token")
-    val deviceToken: String? = null,
+    val deviceToken: String?,
     @SerializedName("device_type")
-    val deviceType: String? = null,
+    val deviceType: String?,
     @SerializedName("full_name")
-    val fullName: String? = null,
+    val fullName: String?,
     @SerializedName("mobile")
-    val mobile: String? = null
+    val mobile: String?
 )

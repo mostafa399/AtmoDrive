@@ -7,19 +7,19 @@ import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SplashViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object ViewModelModule {
-    @Singleton
+
     @Provides
     fun providesSplashViewModel(sharedPreference: SharedPreference) : SplashViewModel{
         return SplashViewModel(sharedPreference)
     }
     @Provides
-    @Singleton
     fun providesLoginViewModel(authUseCase: AuthUseCase, sharedPreference: SharedPreference) : SendPhoneViewModel{
         return SendPhoneViewModel(authUseCase,sharedPreference)
     }

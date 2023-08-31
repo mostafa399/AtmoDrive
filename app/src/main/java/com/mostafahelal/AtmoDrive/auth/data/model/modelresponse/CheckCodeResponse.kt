@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class CheckCodeResponse(
     @SerializedName("data")
-    val data: DataX? = DataX(),
+    val data: Data? ,
     @SerializedName("is_new")
-    val isNew: Boolean? = false,
+    val isNew: Boolean?,
     @SerializedName("message")
-    val message: String? = "",
+    val message: String,
     @SerializedName("status")
-    val status: Int? = 0
+    val status: Int
 )

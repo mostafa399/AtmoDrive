@@ -9,7 +9,7 @@ import com.mostafahelal.AtmoDrive.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateAccount : Fragment() {
+class CreateAccountFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

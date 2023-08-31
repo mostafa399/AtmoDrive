@@ -7,9 +7,10 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.SendCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassengerResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
+import retrofit2.Response
 
 interface AuthRepository {
-    suspend fun sendCode(request: SendCodeRequest): Resource<SendCodeResponse>
+    suspend fun sendCode(phone: String): Resource<SendCodeResponse>
     suspend fun checkCode( request: CheckCodeRequest): Resource<CheckCodeResponse>
     suspend fun registerPassenger( request: RegisterPassengerRequest): Resource<RegisterPassengerResponse>
 }

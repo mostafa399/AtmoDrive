@@ -8,13 +8,18 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeRespons
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-
+const val SEND_CODE="send-code"
+const val CHECK_CODE="check-code"
+const val REGISTER_PASSENGER="register-passenger"
 interface ApiServices {
-    @POST("send-code")
-    suspend fun sendCode(@Body phone: SendCodeRequest):Response<SendCodeResponse>
-    @POST("check-code")
+    @FormUrlEncoded
+    @POST(SEND_CODE)
+    suspend fun sendCode(@Field("mobile") mobile:String):Response<SendCodeResponse>
+    @POST(CHECK_CODE)
     suspend fun checkCode(@Body request: CheckCodeRequest):Response<CheckCodeResponse>
-    @POST("register-passenger")
+    @POST(REGISTER_PASSENGER)
     suspend fun registerPassenger(@Body request: RegisterPassengerRequest): Response<RegisterPassengerResponse>
 }
