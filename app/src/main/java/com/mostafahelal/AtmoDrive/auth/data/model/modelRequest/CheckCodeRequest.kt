@@ -11,8 +11,9 @@ data class CheckCodeRequest(
     val mobile: String,
     @SerializedName("verification_code")
     val verificationCode: String
-){
-    fun asDomain():CodeRequest{
-        return CodeRequest(mobile,verificationCode,deviceToken)
-    }
-}
+)
+//{
+//    fun asDomain():CodeRequest{
+//        return CodeRequest(mobile,verificationCode,deviceToken)
+//    }
+//}

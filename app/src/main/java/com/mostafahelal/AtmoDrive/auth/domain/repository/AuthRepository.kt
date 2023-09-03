@@ -7,6 +7,8 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.SendCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassengerResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
+import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerRequest
+import com.mostafahelal.AtmoDrive.auth.domain.model.PhoneResponse
 import retrofit2.Response
 
 interface AuthRepository {

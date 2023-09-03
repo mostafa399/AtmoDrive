@@ -4,11 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/VerifyFragment"
     android:layout_height="match_parent"
     android:background="@color/backgroundLogin"
     tools:context=".auth.presentation.view.VerifyFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:background="@color/backgroundLogin"
         android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -19,6 +21,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
+            android:background="@color/backgroundLogin"
             android:layout_width="match_parent"
             app:titleTextColor="@color/colorText"
             app:navigationIconTint="@color/colorText"
@@ -121,7 +124,7 @@
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="Resend (00:45s)"
+            android:text="Resend (02:00s)"
             android:textColor="@color/material_dynamic_neutral60"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

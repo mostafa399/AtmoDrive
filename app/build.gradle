@@ -82,52 +82,7 @@ dependencies {
     implementation 'io.github.chaosleung:pinview:1.4.4'
     implementation 'com.hbb20:ccp:2.7.3'
     implementation 'com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0'
-
-
-
 }
 kapt {
     correctErrorTypes = true
 }
-//    def okhttp3Version = '4.5.0'
-//    def retrofitVersion = '2.9.0'
-//    implementation 'androidx.core:core-ktx:1.10.1'
-//    implementation 'androidx.appcompat:appcompat:1.6.1'
-//    implementation 'com.google.android.material:material:1.9.0'
-//    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-//    //navigation component
-//    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-//    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-//    //country Code Picker
-//    implementation 'com.hbb20:ccp:2.7.3'
-//    // otp widget
-//    implementation 'com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0'
-//    implementation 'io.github.chaosleung:pinview:1.4.4'
-//    //ssp && sdp to solve mobile dimensions
-//    implementation 'com.intuit.ssp:ssp-android:1.1.0'
-//    implementation 'com.intuit.sdp:sdp-android:1.1.0'
-//
-//    implementation 'androidx.activity:activity-ktx:1.7.2'
-//    implementation "androidx.fragment:fragment-ktx:1.6.1"
-//    //retrofit
-//    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-//    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
-//    // Retrofit gson converter
-//    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-//    // Coroutines
-//    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-//    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
-//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-//
-//    implementation "com.google.dagger:hilt-android:2.47"
-//    kapt "com.google.dagger:hilt-compiler:2.47"
-//
-//    implementation "androidx.datastore:datastore-preferences:1.0.0"
-//
-//}
-//kapt {
-//    correctErrorTypes = true
-//}

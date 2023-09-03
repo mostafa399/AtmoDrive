@@ -7,12 +7,15 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassenge
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.SendCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
+import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerRequest
+import com.mostafahelal.AtmoDrive.auth.domain.model.PhoneResponse
 import retrofit2.Response
 
 interface IRemoteAuth {
-    suspend fun sendCode(mobile:String): Resource<SendCodeResponse>
-    suspend fun checkCode( request: CheckCodeRequest): Resource<CheckCodeResponse>
-    suspend fun registerPassenger( request: RegisterPassengerRequest): Resource<RegisterPassengerResponse>
-}
+        suspend fun sendCode(mobile:String): Resource<SendCodeResponse>
+        suspend fun checkCode( request: CheckCodeRequest): Resource<CheckCodeResponse>
+        suspend fun registerPassenger( request: RegisterPassengerRequest): Resource<RegisterPassengerResponse>
+    }
+
 
 

@@ -10,3 +10,6 @@ data class SendCodeResponse(
     @SerializedName("status")
     val status: Int
 )
+//{
+//   public fun asDomain():PhoneResponse= PhoneResponse(message,status)
+//}

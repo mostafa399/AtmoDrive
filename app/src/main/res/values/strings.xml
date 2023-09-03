@@ -8,5 +8,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="phonenumber">phoneNumber</string>
+    <string name="submit">Submit</string>
+    <string name="email_address_optional">Email address (optional)</string>
+    <string name="full_name">Full Name</string>
+    <string name="enter_your_information_below_to_create_your_account">Enter your information below to create your account.</string>
 
 </resources>

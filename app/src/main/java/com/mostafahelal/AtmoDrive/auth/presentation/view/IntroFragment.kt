@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.databinding.FragmentIntroBinding
@@ -18,16 +21,27 @@ import dagger.hilt.android.AndroidEntryPoint
 class IntroFragment : Fragment() {
     private lateinit var spannableColorChanged: SpannableColorChanged
     private lateinit var introBinding:FragmentIntroBinding
+    private val callback=object :OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+            requireActivity().finish()
+        }
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        val view=  inflater.inflate(R.layout.fragment_intro, container, false)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         introBinding=FragmentIntroBinding.bind(view)
         introBinding.imageforward.setOnClickListener {
-            findNavController().navigate(R.id.action_intro_to_login)
+            val action=IntroFragmentDirections.actionIntroToLogin()
+            findNavController().navigate(action)
+
+
         }
 
         spannableColorChanged= SpannableColorChanged(view)
