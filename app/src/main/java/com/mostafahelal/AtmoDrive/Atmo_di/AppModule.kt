@@ -2,6 +2,8 @@ package com.mostafahelal.AtmoDrive.Atmo_di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.mostafahelal.AtmoDrive.auth.data.data_source.local.ISharedPrefrenceManager
+import com.mostafahelal.AtmoDrive.auth.data.data_source.local.SharedPrefernceManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +16,14 @@ object AppModule {
     @Singleton
     @Provides
     fun providesSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("Shared_Preferences", Context.MODE_PRIVATE)
+        return context.getSharedPreferences(
+            SharedPrefernceManager.SHARED_PREFERENCE_NAME,
+            Context.MODE_PRIVATE
+        )
+    }
+    @Singleton
+    @Provides
+    fun providesSharedPreferencesManager(sharedPreferences: SharedPreferences): ISharedPrefrenceManager {
+        return SharedPrefernceManager(sharedPreferences)
     }
 }

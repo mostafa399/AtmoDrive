@@ -6,47 +6,59 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/intro"
+        android:id="@+id/IntroFragment"
         android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
             android:id="@+id/action_intro_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/LoginFragment" />
+
     </fragment>
     <fragment
-        android:id="@+id/login"
+        android:id="@+id/LoginFragment"
         android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_verify_NewUser"
-            app:destination="@id/verify_NewUser" />
+            android:id="@+id/action_loginFragment_to_verifyFragment"
+            app:destination="@id/VerifyFragment" />
     </fragment>
     <fragment
-        android:id="@+id/verify_NewUser"
+        android:id="@+id/VerifyFragment"
         android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.VerifyFragment"
         android:label="fragment_verify__new_user"
         tools:layout="@layout/fragment_verify" >
 
         <action
             android:id="@+id/action_verify_NewUser_to_createAccount"
-            app:destination="@id/createAccount" />
+            app:destination="@id/CreateAccountFragment" />
         <action
             android:id="@+id/action_verify_NewUser_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/MapsFragment" />
         <argument
             android:name="mobilePhone"
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/createAccount"
+        android:id="@+id/CreateAccountFragment"
         android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account" >
         <action
             android:id="@+id/action_createAccount_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/MapsFragment" />
+        <argument
+            android:name="phone_number"
+            app:argType="string" />
+        <argument
+            android:name="device_token"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_createAccount_to_login"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/LoginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -55,17 +67,23 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_intro"
-            app:destination="@id/intro" />
+            app:destination="@id/IntroFragment" />
         <action
             android:id="@+id/action_splashFragment_to_login"
-            app:destination="@id/login" />
+            app:destination="@id/LoginFragment" />
         <action
             android:id="@+id/action_splashFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/MapsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mapsFragment"
+        android:id="@+id/MapsFragment"
         android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_login"
+            app:destination="@id/LoginFragment"
+            app:popUpTo="@id/LoginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

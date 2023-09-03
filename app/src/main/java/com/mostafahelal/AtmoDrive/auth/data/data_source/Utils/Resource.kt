@@ -1,6 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.data.data_source.Utils
 
-sealed class Resource<out T> (
+sealed class Resource<T> (
     val data : T? = null,
     val message : String? = null
 ){

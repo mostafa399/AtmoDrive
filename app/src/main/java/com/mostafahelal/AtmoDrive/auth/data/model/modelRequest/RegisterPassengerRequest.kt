@@ -2,6 +2,7 @@ package com.mostafahelal.AtmoDrive.auth.data.model.modelRequest
 
 
 import com.google.gson.annotations.SerializedName
+import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerRequest
 
 data class RegisterPassengerRequest(
     @SerializedName("avatar")
@@ -13,7 +14,10 @@ data class RegisterPassengerRequest(
     @SerializedName("device_type")
     val deviceType: String?,
     @SerializedName("full_name")
-    val fullName: String?,
+    val fullName: String,
     @SerializedName("mobile")
-    val mobile: String?
+    val mobile: String?,
+    @SerializedName("email")
+    val email: String?
+
 )

@@ -8,5 +8,5 @@ data class RegisterPassengerResponse(
     @SerializedName("message")
     val message: String?,
     @SerializedName("status")
-    val status: Int?
+    val status: Int
 )

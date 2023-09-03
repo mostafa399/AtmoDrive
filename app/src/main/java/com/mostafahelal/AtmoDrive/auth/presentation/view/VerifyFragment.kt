@@ -1,10 +1,17 @@
 package com.mostafahelal.AtmoDrive.auth.presentation.view
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,65 +25,135 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentVerifyBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-
+import kotlinx.coroutines.withContext
+import java.util.Locale
 @AndroidEntryPoint
 class VerifyFragment : Fragment() {
-    val viewModel: CheckCodeViewModel by viewModels()
+    private val viewModel: CheckCodeViewModel by viewModels()
     private lateinit var verifyBinding: FragmentVerifyBinding
-    private val args :VerifyFragmentArgs by navArgs()
+    private val args: VerifyFragmentArgs by navArgs()
+    private var countdownTimer: CountDownTimer? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        verifyBinding=FragmentVerifyBinding.inflate(layoutInflater)
+        verifyBinding = FragmentVerifyBinding.inflate(layoutInflater)
         return verifyBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        verifyBinding=FragmentVerifyBinding.bind(view)
-        val phoneNumber=args.mobilePhone
+        setupToolbarNavigation()
+        displayPhoneNumber()
+        setupVerifyButton()
+        initCountdownTimer(120000)
+        verifyBinding.resendVerfyText.setOnClickListener {
+            // Restart the countdown timer when the TextView is clicked
+            restartCountdownTimer(120000) // 2 minutes in milliseconds
+        }
+    }
 
+    private fun setupToolbarNavigation() {
+        verifyBinding.topAppBar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
 
+    private fun displayPhoneNumber() {
+        val phoneNumber = args.mobilePhone
+        val fullText = "Enter the OTP code sent at mobile number $phoneNumber to verify it's you"
+        val subText = "$phoneNumber"
+        val spannableStringBuilder = SpannableStringBuilder(fullText)
+        val start = fullText.indexOf(subText)
+        val end = start + subText.length
+        val color = ContextCompat.getColor(requireContext(), R.color.primary)
+        val foregroundColorSpan = ForegroundColorSpan(color)
+        spannableStringBuilder.setSpan(foregroundColorSpan, start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        verifyBinding.textView2.text = spannableStringBuilder
+    }
+
+    private fun setupVerifyButton() {
         verifyBinding.continueVerifyButton.setOnClickListener {
-
-            val otpCode=verifyBinding.pinView2.editableText.toString()
-                val result = CheckCodeRequest(verificationCode = otpCode, mobile = phoneNumber, deviceToken = "device_token:$phoneNumber")
-                viewModel.checkCode(result)
-            lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                    viewModel.navigateToRegister.collect{networkState->
-                    when(networkState?.status){
-                        NetworkState.Status.SUCCESS->{
-                            val action=VerifyFragmentDirections.actionVerifyNewUserToCreateAccount()
-                            findNavController().navigate(action)
-                        }
-
-                        else -> Unit
-                    }
-
-                    }
-
-                }
-            }
-                lifecycleScope.launch {  viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                    viewModel.navigateToMain.collect{networkState->
-                        when(networkState?.status){
-                            NetworkState.Status.SUCCESS->{
-                                val action=VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
-                                findNavController().navigate(action)
-                            }
-
-                            else -> Unit
-                        }
-
-                    }
-                }
-            }
-
+            val otpCode = verifyBinding.pinView2.editableText.toString()
+            val phoneNumber = args.mobilePhone
+            val deviceToken = "device_token:$phoneNumber"
+            val result = CheckCodeRequest(verificationCode = otpCode, mobile = phoneNumber, deviceToken = deviceToken)
+            viewModel.checkCode(result)
+            observeNavigateToRegister()
+            observeNavigateToMain()
 
         }
-}
+    }
+
+    private fun observeNavigateToRegister() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToRegister.collect { networkState ->
+                    when (networkState?.status) {
+                        NetworkState.Status.SUCCESS -> {
+                            withContext(Dispatchers.Main){
+                            val action = VerifyFragmentDirections.actionVerifyNewUserToCreateAccount(phoneNumber = args.mobilePhone, deviceToken = "device_token ${args.mobilePhone}")
+                            findNavController().navigate(action)
+                        }}
+                        NetworkState.Status.FAILED->{
+                            Log.d("VerifyFragment ", networkState.msg.toString())
+
+                        }
+                        else -> Unit
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeNavigateToMain() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToMain.collect { networkState ->
+                    when (networkState?.status) {
+                        NetworkState.Status.SUCCESS -> {
+                            withContext(Dispatchers.Main){
+                            val action = VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
+                            findNavController().navigate(action)
+                        }}
+                        NetworkState.Status.FAILED->{
+                            Log.d("VerifyFragment", networkState.msg.toString())
+
+                        }
+                        else -> Unit
+                    }
+                }
+            }
+        }
+    }
+    private fun initCountdownTimer(millisInFuture: Long) {
+        countdownTimer = object : CountDownTimer(millisInFuture, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                // Update the TextView with the remaining time
+                val secondsRemaining = millisUntilFinished / 1000
+                val minutes = secondsRemaining / 60
+                val seconds = secondsRemaining % 60
+                val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+                verifyBinding.resendVerfyText.text = "Resend ($formattedTime)"
+            }
+
+            override fun onFinish() {
+                // Countdown timer finished, update the TextView
+                verifyBinding.resendVerfyText.text = "Resend"
+            }
+        }
+        countdownTimer?.start()
+    }
+
+    private fun restartCountdownTimer(millisInFuture: Long) {
+        countdownTimer?.cancel() // Cancel the previous timer if running
+        initCountdownTimer(millisInFuture)
+        countdownTimer?.start()
+    }
+
 }

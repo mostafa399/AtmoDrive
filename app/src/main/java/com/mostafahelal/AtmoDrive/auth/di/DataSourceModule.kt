@@ -14,6 +14,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
+
+
     @Provides
     fun provideRemoteData(apiServices: ApiServices):IRemoteAuth{
         return RemoteAuth(apiServices=apiServices)

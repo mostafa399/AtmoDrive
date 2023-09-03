@@ -1,11 +1,15 @@
 package com.mostafahelal.AtmoDrive.Atmo_di
 
+import com.mostafahelal.AtmoDrive.auth.data.data_source.local.ISharedPrefrenceManager
+import com.mostafahelal.AtmoDrive.auth.data.data_source.local.SharedPrefernceManager
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,14 +27,27 @@ object NetWorkModule {
             .writeTimeout(50,TimeUnit.SECONDS)
             .readTimeout(50,TimeUnit.SECONDS)
             .callTimeout(50,TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build()
-        return client
+            .addInterceptor(object : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val originalRequest = chain.request()
+                val originalUrl = originalRequest.url
+                val url = originalUrl.newBuilder().build()
+                val requestBuilder = originalRequest.newBuilder().url(url)
+                    .addHeader("Accept", "application/json")
+                    .addHeader("Authorization", "Bearer ${SharedPrefernceManager.USER_IS_LOGGED_IN}")
+                val request = requestBuilder.build()
+                val response = chain.proceed(request)
+                response.code//status code
+                return response
+    } }).build()
+    return client
     }
+
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit{
           return Retrofit.Builder()
-              .baseUrl(BASE_URL)
+              .baseUrl("https://s1.drive.api.atmosphere.solutions/api/v1/passengers/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -38,7 +55,6 @@ object NetWorkModule {
 
     }
     @Provides
-    @Singleton
     fun provideApiService(retrofit: Retrofit):ApiServices{
         return retrofit.create(ApiServices::class.java)
     }
