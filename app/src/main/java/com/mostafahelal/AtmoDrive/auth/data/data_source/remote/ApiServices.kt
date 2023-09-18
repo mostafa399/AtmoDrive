@@ -3,10 +3,8 @@ package com.mostafahelal.AtmoDrive.auth.data.data_source.remote
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassengerResponse
-import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.SendCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
-import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -19,8 +17,22 @@ interface ApiServices {
     @FormUrlEncoded
     @POST("send-code")
     suspend fun sendCode(@Field("mobile") mobile:String):Response<SendCodeResponse>
+    @FormUrlEncoded
     @POST(CHECK_CODE)
-    suspend fun checkCode(@Body request: CheckCodeRequest):Response<CheckCodeResponse>
+    suspend fun checkCode(@Field("device_token")deviceToken:String,
+                          @Field("mobile")mobile:String,
+                          @Field("verification_code")verificationCode:String
+                          ):Response<CheckCodeResponse>
+
+    @FormUrlEncoded
     @POST(REGISTER_PASSENGER)
-    suspend fun registerPassenger(@Body request: RegisterPassengerRequest): Response<RegisterPassengerResponse>
+    suspend fun registerPassenger(@Field("full_name")full_name:String,
+                                  @Field("mobile")mobile:String,
+                                  @Field("avatar")avatar:String,
+                                  @Field("device_token")device_token:String,
+                                  @Field("device_id")device_id:String,
+                                  @Field("device_type")device_type:String,
+                                  @Field("email")email:String?
+
+    ): Response<RegisterPassengerResponse>
 }

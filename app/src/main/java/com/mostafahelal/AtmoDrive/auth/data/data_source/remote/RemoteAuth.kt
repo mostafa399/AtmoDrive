@@ -6,13 +6,16 @@ import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassenger
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassengerResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.SendCodeResponse
+import com.mostafahelal.AtmoDrive.auth.domain.model.CodeResponse
+import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerResponse
+import com.mostafahelal.AtmoDrive.auth.domain.model.PhoneResponse
 import javax.inject.Inject
 class RemoteAuth @Inject constructor(val apiServices: ApiServices):IRemoteAuth {
-    override suspend fun sendCode(mobile: String): Resource<SendCodeResponse>{
+    override suspend fun sendCode(mobile: String): Resource<PhoneResponse>{
         return try {
             val response=apiServices.sendCode(mobile)
-            if (response.isSuccessful&&response.body()!=null&&response.body()?.status==1) {
-                Resource.Success(response.body()!!)
+            if (response.isSuccessful&&response.body()!=null&&response.body()?.status==true) {
+                Resource.Success(response.body()!!.asDomain())
             }
             else{
                 Resource.Error("Send code request failed")
@@ -23,11 +26,13 @@ class RemoteAuth @Inject constructor(val apiServices: ApiServices):IRemoteAuth {
         }
     }
 
-    override suspend fun checkCode(request: CheckCodeRequest):Resource<CheckCodeResponse> {
+    override suspend fun checkCode(deviceToken:String,
+                                   mobile:String,
+                                   verificationCode:String):Resource<CodeResponse> {
         return try {
-            val response=apiServices.checkCode(request)
-            if (response.isSuccessful&&response.body()!=null&&response.body()?.status==1){
-                Resource.Success(response.body()!!)
+            val response=apiServices.checkCode(deviceToken,mobile,verificationCode)
+            if (response.isSuccessful&&response.body()!=null&&response.body()?.status==true){
+                Resource.Success(response.body()!!.asDomain())
             }else{
                 Resource.Error("Check code is expired")
             }
@@ -39,11 +44,17 @@ class RemoteAuth @Inject constructor(val apiServices: ApiServices):IRemoteAuth {
         }
     }
 
-    override suspend fun registerPassenger(request: RegisterPassengerRequest): Resource<RegisterPassengerResponse> {
+    override suspend fun registerPassenger(full_name:String,
+                                           mobile:String,
+                                           avatar:String,
+                                           device_token:String,
+                                           device_id:String,
+                                           device_type:String,
+                                           email:String?): Resource<NewPassengerResponse> {
         return try {
-            val response=apiServices.registerPassenger(request=request)
+            val response=apiServices.registerPassenger(full_name,mobile,avatar,device_token,device_id,device_type,email)
             if (response.isSuccessful&&response.body() !=null){
-                Resource.Success(response.body()!!)
+                Resource.Success(response.body()!!.asDomain())
             }else{
                 Resource.Error("Register code request failed")
             }

@@ -1,7 +1,6 @@
 package com.mostafahelal.AtmoDrive.Atmo_di
 
-import com.mostafahelal.AtmoDrive.auth.data.data_source.local.ISharedPrefrenceManager
-import com.mostafahelal.AtmoDrive.auth.data.data_source.local.SharedPrefernceManager
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Constants
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
 import dagger.Module
 import dagger.Provides
@@ -15,7 +14,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-const val BASE_URL="https://s1.drive.api.atmosphere.solutions/api/v1/passengers/"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetWorkModule {
@@ -27,6 +25,8 @@ object NetWorkModule {
             .writeTimeout(50,TimeUnit.SECONDS)
             .readTimeout(50,TimeUnit.SECONDS)
             .callTimeout(50,TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val originalRequest = chain.request()
@@ -34,12 +34,13 @@ object NetWorkModule {
                 val url = originalUrl.newBuilder().build()
                 val requestBuilder = originalRequest.newBuilder().url(url)
                     .addHeader("Accept", "application/json")
-                    .addHeader("Authorization", "Bearer ${SharedPrefernceManager.USER_IS_LOGGED_IN}")
+                    .addHeader("Authorization", "Bearer ${Constants.USER_IS_LOGGED_IN}")
                 val request = requestBuilder.build()
                 val response = chain.proceed(request)
-                response.code//status code
+                response.code
                 return response
-    } }).build()
+                 }
+            }).build()
     return client
     }
 

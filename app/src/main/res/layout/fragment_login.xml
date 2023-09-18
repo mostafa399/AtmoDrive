@@ -6,14 +6,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/LoginFragment"
-         android:background="@color/backgroundLogin"
+         android:background="@color/Background"
          style="@style/Base.Theme.AtmoDrive"
         tools:context=".auth.presentation.view.LoginFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_marginTop="@dimen/_15sdp"
             android:id="@+id/appBarLayout"
-            android:background="@color/backgroundLogin"
+            android:background="@color/Background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +22,8 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
-                app:titleTextColor="@color/colorText"
-                app:navigationIconTint="@color/colorText"
+                app:titleTextColor="@color/Title"
+                app:navigationIconTint="@color/Title"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:title="Enter mobile number" />
@@ -50,7 +50,7 @@
                 android:fontFamily="sans-serif"
                 android:paddingRight="50dp"
                 android:text="@string/F_LOGIN"
-                android:textColor="@color/colorText"
+                android:textColor="@color/Title"
                 android:textFontWeight="400"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,10 +68,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView">
 
                 <com.hbb20.CountryCodePicker
+                    android:clickable="false"
                     app:ccpDialog_showFlag="true"
-                    app:ccpDialog_textColor="@color/colorText"
-                    app:ccp_arrowColor="@color/colorText"
-                    app:ccp_contentColor="@color/colorText4"
+                    app:ccpDialog_textColor="@color/Title"
+                    app:ccp_arrowColor="@color/Title"
+                    app:ccp_contentColor="@color/Title"
                     android:id="@+id/ccp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -87,7 +88,7 @@
                 <EditText
 
                     android:id="@+id/phone"
-                    android:textColor="@color/colorText"
+                    android:textColor="@color/Title"
                     android:background="@drawable/phonever_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -95,7 +96,7 @@
                     android:layout_gravity="center"
                     android:padding="15dp"
                     android:layout_marginEnd="5dp"
-                    android:textColorHint="@color/colorText4"
+                    android:textColorHint="@color/Hint"
                     android:hint="1024952995"
                     android:maxLength="10"/>
 
@@ -106,10 +107,10 @@
                android:id="@+id/line"
                android:layout_width="match_parent"
                android:layout_height="2dp"
-               android:background="@color/material_dynamic_neutral40"
+               android:background="@color/black"
                app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
                android:layout_marginTop="1dp"
-               android:outlineAmbientShadowColor="@color/material_dynamic_neutral20"
+               android:outlineAmbientShadowColor="@color/Hint"
                />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -134,11 +135,23 @@
                 android:layout_marginEnd="20dp"
                 android:padding="10dp"
                 android:text="@string/TermAndPrivacy"
-                android:textColor="@color/colorText"
+                android:textColor="@color/Title"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/continue_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.143" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,16 +10,24 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.mostafahelal.AtmoDrive.R
+import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
+import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SplashViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentIntroBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class IntroFragment : Fragment() {
-    private lateinit var spannableColorChanged: SpannableColorChanged
     private lateinit var introBinding:FragmentIntroBinding
     private val callback=object :OnBackPressedCallback(true){
         override fun handleOnBackPressed() {
@@ -37,29 +45,30 @@ class IntroFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         introBinding=FragmentIntroBinding.bind(view)
-        introBinding.imageforward.setOnClickListener {
-            val action=IntroFragmentDirections.actionIntroToLogin()
-            findNavController().navigate(action)
-
-
-        }
-
-        spannableColorChanged= SpannableColorChanged(view)
-        spannableColorChanged.applySpannableText()
+        observetoLogin()
+        applySpannableText()
     }
-    class SpannableColorChanged(private val view: View) {
-        private val textView: TextView = view.findViewById(R.id.introtext)
-        fun applySpannableText() {
-            val fullText = "Looking for a ride? Try AtmoDrive and Book now!"
-            val subText = "AtmoDrive"
-            val spannableStringBuilder = SpannableStringBuilder(fullText)
-            val start = fullText.indexOf(subText)
-            val end = start + subText.length
-            val color = ContextCompat.getColor(view.context, R.color.primary)
-            val foregroundColorSpan = ForegroundColorSpan(color)
-            spannableStringBuilder.setSpan(foregroundColorSpan, start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
-            textView.text = spannableStringBuilder
+    private fun observetoLogin(){
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                introBinding.constraintLayout7.setOnClickListener {
+                    val action=IntroFragmentDirections.actionIntroToLogin()
+                    findNavController().navigate(action)
+                }
+            }
         }
     }
+    fun applySpannableText() {
+        val fullText = "Looking for a ride? Try AtmoDrive and Book now!"
+        val subText = "AtmoDrive"
+        val spannableStringBuilder = SpannableStringBuilder(fullText)
+        val start = fullText.indexOf(subText)
+        val end = start + subText.length
+        val color = ContextCompat.getColor(requireContext(), R.color.primary)
+        val foregroundColorSpan = ForegroundColorSpan(color)
+        spannableStringBuilder.setSpan(foregroundColorSpan, start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        introBinding.introtext.text = spannableStringBuilder
+    }
+
 
 }

@@ -8,8 +8,9 @@ data class SendCodeResponse(
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
-    val status: Int
-)
-//{
-//   public fun asDomain():PhoneResponse= PhoneResponse(message,status)
-//}
+    val status: Boolean,
+    @SerializedName("data")
+    val data: NewUser
+){
+    public fun asDomain():PhoneResponse= PhoneResponse(message,status)
+}

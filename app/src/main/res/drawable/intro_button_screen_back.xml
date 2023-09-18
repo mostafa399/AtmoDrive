@@ -10,9 +10,9 @@
         android:gradientRadius="100"
         android:centerX="35%"
         android:centerY="50%"
-        android:centerColor="#FFFFFF"
-        android:startColor="#FFFFFF"
-        android:endColor="#FFFFFF"
+        android:centerColor="@color/white"
+        android:startColor="@color/white"
+        android:endColor="@color/white"
         android:type="radial"
         />
 

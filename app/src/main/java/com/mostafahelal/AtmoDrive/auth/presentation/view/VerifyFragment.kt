@@ -1,6 +1,5 @@
 package com.mostafahelal.AtmoDrive.auth.presentation.view
 
-import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -18,15 +16,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
-import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.showToast
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityGone
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentVerifyBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
@@ -79,13 +77,18 @@ class VerifyFragment : Fragment() {
 
     private fun setupVerifyButton() {
         verifyBinding.continueVerifyButton.setOnClickListener {
-            val otpCode = verifyBinding.pinView2.editableText.toString()
+            val otpCode = verifyBinding.pinView2.text.toString()
             val phoneNumber = args.mobilePhone
             val deviceToken = "device_token:$phoneNumber"
-            val result = CheckCodeRequest(verificationCode = otpCode, mobile = phoneNumber, deviceToken = deviceToken)
-            viewModel.checkCode(result)
-            observeNavigateToRegister()
-            observeNavigateToMain()
+            if (otpCode.isNotEmpty()){
+                viewModel.checkCode(deviceToken,phoneNumber,otpCode)
+                observeNavigateToRegister()
+                observeNavigateToMain()
+            }
+            else{
+                showToast("The otp code is error ")
+            }
+
 
         }
     }
@@ -97,20 +100,28 @@ class VerifyFragment : Fragment() {
                     when (networkState?.status) {
                         NetworkState.Status.SUCCESS -> {
                             withContext(Dispatchers.Main){
-                            val action = VerifyFragmentDirections.actionVerifyNewUserToCreateAccount(phoneNumber = args.mobilePhone, deviceToken = "device_token ${args.mobilePhone}")
-                            findNavController().navigate(action)
+                                val action = VerifyFragmentDirections.actionVerifyNewUserToCreateAccount(phoneNumber = args.mobilePhone, deviceToken = "device_token ${args.mobilePhone}")
+                                findNavController().navigate(action)
+                                verifyBinding.pb2.visibilityGone()
+
                         }}
                         NetworkState.Status.FAILED->{
                             Log.d("VerifyFragment ", networkState.msg.toString())
+                            verifyBinding.pb2.visibilityGone()
+
 
                         }
+                        NetworkState.Status.RUNNING->{
+                            verifyBinding.pb2.visibilityVisible()
+
+                        }
+
                         else -> Unit
                     }
                 }
             }
         }
     }
-
     private fun observeNavigateToMain() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -118,11 +129,20 @@ class VerifyFragment : Fragment() {
                     when (networkState?.status) {
                         NetworkState.Status.SUCCESS -> {
                             withContext(Dispatchers.Main){
-                            val action = VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
-                            findNavController().navigate(action)
-                        }}
+                                val action = VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
+                                findNavController().navigate(action)
+                                verifyBinding.pb2.visibilityGone()
+
+                            }}
                         NetworkState.Status.FAILED->{
                             Log.d("VerifyFragment", networkState.msg.toString())
+                            verifyBinding.pb2.visibilityGone()
+
+
+                        }
+                        NetworkState.Status.RUNNING->{
+                            verifyBinding.pb2.visibilityVisible()
+
 
                         }
                         else -> Unit

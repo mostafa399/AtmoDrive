@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:id="@+id/CreateAccountFragment"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLogin"
+    android:background="@color/Background"
     tools:context=".auth.presentation.view.CreateAccountFragment">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_marginTop="@dimen/_15sdp"
-        android:background="@color/backgroundLogin"
+        android:background="@color/Background"
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,10 +22,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
-            android:background="@color/backgroundLogin"
-            app:navigationIconTint="@color/colorText"
+            android:background="@color/Background"
+            app:navigationIconTint="@color/Title"
             android:layout_width="match_parent"
-            app:titleTextColor="@color/colorText"
+            app:titleTextColor="@color/Title"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             app:title="Create Account" />
@@ -54,7 +54,7 @@
             android:fontFamily="sans-serif"
             android:paddingRight="50dp"
             android:text="@string/enter_your_information_below_to_create_your_account"
-            android:textColor="@color/colorText"
+            android:textColor="@color/Title"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,8 +63,8 @@
 
 
         <EditText
-            android:textColor="@color/colorText"
-            android:textColorHint="@color/colorText4"
+            android:textColor="@color/Title"
+            android:textColorHint="@color/Hint"
             android:id="@+id/editTextText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,8 +77,8 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:textColor="@color/colorText"
-            android:textColorHint="@color/colorText4"
+            android:textColor="@color/Title"
+            android:textColorHint="@color/Hint"
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

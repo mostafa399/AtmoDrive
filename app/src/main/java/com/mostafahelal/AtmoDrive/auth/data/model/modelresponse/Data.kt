@@ -2,6 +2,7 @@ package com.mostafahelal.AtmoDrive.auth.data.model.modelresponse
 
 
 import com.google.gson.annotations.SerializedName
+import com.mostafahelal.AtmoDrive.auth.domain.model.UserData
 
 data class Data(
     @SerializedName("avatar")
@@ -9,7 +10,7 @@ data class Data(
     @SerializedName("email")
     val email: String?,
     @SerializedName("full_name")
-    val fullName: String?,
+    val fullName: String,
     @SerializedName("is_dark_mode")
     val isDarkMode: Int?,
     @SerializedName("lang")
@@ -30,4 +31,7 @@ data class Data(
     val status: Int?,
     @SerializedName("suspend")
     val suspend: Int?
-)
+){
+    public fun asDomain():UserData=UserData(avatar,email,fullName
+        ,isDarkMode,lang,mobile,passengerCode,rate,rememberToken,status,suspend)
+}

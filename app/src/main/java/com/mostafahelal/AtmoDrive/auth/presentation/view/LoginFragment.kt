@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -22,6 +23,8 @@ import androidx.navigation.ui.NavigationUiSaveStateControl
 import com.hbb20.CountryCodePicker
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityGone
+import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SendPhoneViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,7 +65,7 @@ class LoginFragment : Fragment() {
         loginBinding.continueButton.setOnClickListener {
             val phoneNumber = loginBinding.phone.editableText.toString()
             if (phoneNumber.length == 10) {
-                val validPrefixes = listOf("11", "15", "10")
+                val validPrefixes = listOf("11","12", "15", "10")
                 if (validPrefixes.any { phoneNumber.startsWith(it) }) {
                     val phone = "0$phoneNumber"
                     viewModel.sendMobilePhone(phone)
@@ -105,11 +108,19 @@ class LoginFragment : Fragment() {
                             withContext(Dispatchers.Main){
                             val action = LoginFragmentDirections.actionLoginFragmentToVerifyFragment("0$phone")
                             findNavController().navigate(action)
+                                  loginBinding.pb.visibilityGone()
                         }
                         }
                         NetworkState.Status.FAILED -> {
                             Log.d("LoginFragment", networkState.msg.toString())
+                            loginBinding.pb.visibilityGone()
+
                         }
+                        NetworkState.Status.RUNNING -> {
+                            loginBinding.pb.visibilityVisible()
+
+                        }
+
                         else -> Unit
                     }
                 }

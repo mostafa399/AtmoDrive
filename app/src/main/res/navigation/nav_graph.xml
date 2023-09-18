@@ -69,15 +69,12 @@
             android:id="@+id/action_splashFragment_to_intro"
             app:destination="@id/IntroFragment" />
         <action
-            android:id="@+id/action_splashFragment_to_login"
-            app:destination="@id/LoginFragment" />
-        <action
             android:id="@+id/action_splashFragment_to_mapsFragment"
             app:destination="@id/MapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/MapsFragment"
-        android:name="com.mostafahelal.AtmoDrive.auth.presentation.view.MapsFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action

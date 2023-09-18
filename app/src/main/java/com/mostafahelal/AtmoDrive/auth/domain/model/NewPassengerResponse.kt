@@ -1,9 +1,8 @@
 package com.mostafahelal.AtmoDrive.auth.domain.model
 
-import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.Data
-
 data class NewPassengerResponse(
-    val status: Int,
+    val status: Boolean,
     val message: String,
-    val data: Data
+    val data: UserData
+
 )

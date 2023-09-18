@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:id="@+id/VerifyFragment"
     android:layout_height="match_parent"
-    android:background="@color/backgroundLogin"
+    android:background="@color/Background"
     tools:context=".auth.presentation.view.VerifyFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:background="@color/backgroundLogin"
+        android:background="@color/Background"
         android:layout_marginTop="@dimen/_15sdp"
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -21,10 +21,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
-            android:background="@color/backgroundLogin"
+            android:background="@color/Background"
             android:layout_width="match_parent"
-            app:titleTextColor="@color/colorText"
-            app:navigationIconTint="@color/colorText"
+            app:titleTextColor="@color/Title"
+            app:navigationIconTint="@color/Title"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             app:title="Verify" />
@@ -52,7 +52,7 @@
             android:fontFamily="sans-serif"
             android:paddingRight="50dp"
             android:text="Enter the OTP code sent at mobile number +20 114 933 6618 to verify its you."
-            android:textColor="@color/colorText"
+            android:textColor="@color/Title"
             android:textFontWeight="400"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,9 +71,9 @@
             android:gravity="center"
             android:hint="____"
             android:inputType="number"
-            android:textColor="@color/colorText"
-            android:textColorHint="@color/colorText4"
-            app:OtpLineColor="@color/colorText4"
+            android:textColor="@color/Title"
+            android:textColorHint="@color/Hint"
+            app:OtpLineColor="@color/Hint"
             app:OtpViewType="line"
             app:hideLineWhenFilled="false"
             app:itemCount="4"
@@ -111,7 +111,7 @@
             android:padding="10dp"
 
             android:text="Don’t receive a code?"
-            android:textColor="@color/colorText"
+            android:textColor="@color/Title"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -125,12 +125,23 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="Resend (02:00s)"
-            android:textColor="@color/material_dynamic_neutral60"
+            android:textColor="@color/Hint"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/verify_text"
             app:layout_constraintTop_toBottomOf="@+id/continue_verify_button"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/pb2"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.143" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
