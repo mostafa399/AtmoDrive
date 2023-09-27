@@ -1,5 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.presentation.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -41,6 +42,7 @@ class SplashFragment : Fragment() {
             if (viewModel.loggedIn) {
                 withContext(Dispatchers.Main) {
                     // User is already logged in, navigate to MapsFragment
+
                     val action = SplashFragmentDirections.actionSplashFragmentToMapsFragment()
                     findNavController().navigate(action)
                 }

@@ -11,5 +11,8 @@
     <string name="full_name">Full Name</string>
     <string name="apiKey">AIzaSyAX70sHD4xeaJA25GLG9-FNTUt8vELac-o</string>
     <string name="enter_your_information_below_to_create_your_account">Enter your information below to create your account.</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="cash_price"><font color='#3CD29C'>105 EGP </font>. 0 EGP in wallet</string>
+
 
 </resources>

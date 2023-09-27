@@ -1,5 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.presentation.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.SpannableStringBuilder
@@ -23,6 +24,7 @@ import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityGone
 import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentVerifyBinding
+import com.mostafahelal.AtmoDrive.maps.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -129,8 +131,10 @@ class VerifyFragment : Fragment() {
                     when (networkState?.status) {
                         NetworkState.Status.SUCCESS -> {
                             withContext(Dispatchers.Main){
-                                val action = VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
-                                findNavController().navigate(action)
+                                startActivity(Intent(requireContext(), MapsActivity::class.java))
+                                activity?.finish()
+//                                val action = VerifyFragmentDirections.actionVerifyNewUserToMapsFragment()
+//                                findNavController().navigate(action)
                                 verifyBinding.pb2.visibilityGone()
 
                             }}

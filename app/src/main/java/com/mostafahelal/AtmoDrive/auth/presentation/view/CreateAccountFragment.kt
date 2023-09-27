@@ -1,5 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.presentation.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
-import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.RegisterPassengerViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentCreateAccountBinding
+import com.mostafahelal.AtmoDrive.maps.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,8 +61,10 @@ class CreateAccountFragment : Fragment() {
                         when(networkState?.status){
                             NetworkState.Status.SUCCESS->{
                                 withContext(Dispatchers.Main){
-                                val action=CreateAccountFragmentDirections.actionCreateAccountToMapsFragment()
-                                findNavController().navigate(action)
+                                    startActivity(Intent(requireContext(), MapsActivity::class.java))
+                                    activity?.finish()
+//                                val action=CreateAccountFragmentDirections.actionCreateAccountToMapsFragment()
+//                                findNavController().navigate(action)
                             }
                             }
                             else -> Unit
