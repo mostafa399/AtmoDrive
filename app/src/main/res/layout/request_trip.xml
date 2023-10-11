@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/bottom_sheet_request_trip"
-    android:orientation="vertical"
-    app:behavior_hideable="false"
-    app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16sdp"
+        android:layout_margin="@dimen/_10sdp"
         android:background="@color/Background"
         android:backgroundTint="@color/Background"
         app:cardCornerRadius="@dimen/_20sdp"
@@ -31,7 +32,7 @@
                 android:id="@+id/materialCardView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_16sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@color/Background"
                 app:cardElevation="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp">
 
                     <ImageView
@@ -92,7 +93,7 @@
                 android:id="@+id/materialCardView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_16sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@color/Background"
                 app:cardElevation="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,7 +101,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/_10sdp">
 
                     <ImageView
@@ -151,7 +152,7 @@
                 android:id="@+id/materialCardView4"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_16sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@color/Background"
                 app:cardElevation="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -199,7 +200,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@drawable/intro_button_screen_back"
                 android:backgroundTint="@color/primary"
@@ -217,3 +218,4 @@
 
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
