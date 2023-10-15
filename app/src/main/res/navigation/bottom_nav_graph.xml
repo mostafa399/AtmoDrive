@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_graph"
+    app:startDestination="@id/bottomSheetRequestTripFragment">
+
+    <fragment
+        android:id="@+id/bottomSheetRequestTripFragment"
+        android:name="com.mostafahelal.AtmoDrive.BottomSheetRequestTripFragment"
+        android:label="fragment_bottom_sheet_request_trip"
+        tools:layout="@layout/fragment_bottom_sheet_request_trip" >
+        <action
+            android:id="@+id/action_bottomSheetRequestTripFragment_to_bottomSheetTripDetailsFragment"
+            app:destination="@id/bottomSheetTripDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bottomSheetTripDetailsFragment"
+        android:name="com.mostafahelal.AtmoDrive.BottomSheetTripDetailsFragment"
+        android:label="fragment_bottom_sheet_trip_details"
+        tools:layout="@layout/fragment_bottom_sheet_trip_details" />
+</navigation>
