@@ -1,6 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.domain.use_case
 
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Resource
+import com.mostafahelal.AtmoDrive.Utils.Resource
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.CheckCodeResponse

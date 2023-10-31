@@ -1,6 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.domain.use_case
 
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Resource
+import com.mostafahelal.AtmoDrive.Utils.Resource
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
 import com.mostafahelal.AtmoDrive.auth.domain.model.CodeResponse
@@ -19,7 +19,7 @@ class AuthUseCase @Inject constructor(
     }
     override suspend fun checkCode(deviceToken:String,
                                    mobile:String,
-                                   verificationCode:String):Resource<CodeResponse> {
+                                   verificationCode:String): Resource<CodeResponse> {
 
               return authRepository.checkCode(deviceToken,mobile,verificationCode)
 
@@ -30,7 +30,7 @@ class AuthUseCase @Inject constructor(
                                            device_token:String,
                                            device_id:String,
                                            device_type:String,
-                                           email:String?):Resource<NewPassengerResponse> {
+                                           email:String?): Resource<NewPassengerResponse> {
 
         return authRepository.registerPassenger(full_name, mobile, avatar, device_token, device_id, device_type,email)
 

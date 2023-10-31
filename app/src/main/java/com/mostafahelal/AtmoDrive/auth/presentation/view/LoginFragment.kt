@@ -22,9 +22,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUiSaveStateControl
 import com.hbb20.CountryCodePicker
 import com.mostafahelal.AtmoDrive.R
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityGone
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityVisible
+import com.mostafahelal.AtmoDrive.Utils.NetworkState
+import com.mostafahelal.AtmoDrive.Utils.visibilityGone
+import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SendPhoneViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint

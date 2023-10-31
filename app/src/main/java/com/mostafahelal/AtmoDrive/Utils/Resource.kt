@@ -1,4 +1,4 @@
-package com.mostafahelal.AtmoDrive.auth.data.data_source.Utils
+package com.mostafahelal.AtmoDrive.Utils
 
 sealed class Resource<T> (
     val data : T? = null,

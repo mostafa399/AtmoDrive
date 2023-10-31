@@ -18,10 +18,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mostafahelal.AtmoDrive.R
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.showToast
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityGone
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.visibilityVisible
+import com.mostafahelal.AtmoDrive.Utils.NetworkState
+import com.mostafahelal.AtmoDrive.Utils.showToast
+import com.mostafahelal.AtmoDrive.Utils.visibilityGone
+import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentVerifyBinding
 import com.mostafahelal.AtmoDrive.maps.MapsActivity

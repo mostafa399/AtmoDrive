@@ -1,6 +1,6 @@
 package com.mostafahelal.AtmoDrive.Atmo_di
 
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Constants
+import com.mostafahelal.AtmoDrive.Utils.Constants
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
 import dagger.Module
 import dagger.Provides

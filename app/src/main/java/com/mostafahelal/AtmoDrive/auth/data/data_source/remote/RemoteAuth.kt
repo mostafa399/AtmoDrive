@@ -1,6 +1,6 @@
 package com.mostafahelal.AtmoDrive.auth.data.data_source.remote
 
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Resource
+import com.mostafahelal.AtmoDrive.Utils.Resource
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelresponse.RegisterPassengerResponse
@@ -11,7 +11,7 @@ import com.mostafahelal.AtmoDrive.auth.domain.model.NewPassengerResponse
 import com.mostafahelal.AtmoDrive.auth.domain.model.PhoneResponse
 import javax.inject.Inject
 class RemoteAuth @Inject constructor(val apiServices: ApiServices):IRemoteAuth {
-    override suspend fun sendCode(mobile: String): Resource<PhoneResponse>{
+    override suspend fun sendCode(mobile: String): Resource<PhoneResponse> {
         return try {
             val response=apiServices.sendCode(mobile)
             if (response.isSuccessful&&response.body()!=null&&response.body()?.status==true) {
@@ -28,7 +28,7 @@ class RemoteAuth @Inject constructor(val apiServices: ApiServices):IRemoteAuth {
 
     override suspend fun checkCode(deviceToken:String,
                                    mobile:String,
-                                   verificationCode:String):Resource<CodeResponse> {
+                                   verificationCode:String): Resource<CodeResponse> {
         return try {
             val response=apiServices.checkCode(deviceToken,mobile,verificationCode)
             if (response.isSuccessful&&response.body()!=null&&response.body()?.status==true){

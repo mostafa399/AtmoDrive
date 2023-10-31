@@ -3,7 +3,7 @@ package com.mostafahelal.AtmoDrive.auth.presentation.view_model
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mostafahelal.AtmoDrive.auth.data.data_source.local.MySharedPreferences
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
+import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.auth.domain.use_case.IAuthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +36,7 @@ class CheckCodeViewModel @Inject constructor(
                     }
                 }else if (response.isFailed()){
                     _NavigateToMain.value = NetworkState.getErrorMessage("Check code request failed3")
-                    _NavigateToRegister.value=NetworkState.getErrorMessage("Check code request failed3")
+                    _NavigateToRegister.value= NetworkState.getErrorMessage("Check code request failed3")
 
                 }
 

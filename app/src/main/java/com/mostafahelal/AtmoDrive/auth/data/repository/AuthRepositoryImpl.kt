@@ -1,5 +1,5 @@
 package com.mostafahelal.AtmoDrive.auth.data.repository
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Resource
+import com.mostafahelal.AtmoDrive.Utils.Resource
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.IRemoteAuth
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.CheckCodeRequest
 import com.mostafahelal.AtmoDrive.auth.data.model.modelRequest.RegisterPassengerRequest
@@ -35,7 +35,7 @@ class AuthRepositoryImpl @Inject constructor(private val iRemoteAuth: IRemoteAut
                                            device_id:String,
                                            device_type:String,
                                            email:String?
-    ): Resource<NewPassengerResponse>{
+    ): Resource<NewPassengerResponse> {
             return iRemoteAuth.registerPassenger(full_name,mobile,avatar,device_token,device_id,device_type,email)
 
     }

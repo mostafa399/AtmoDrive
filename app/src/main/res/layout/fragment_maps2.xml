@@ -15,31 +15,6 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <com.google.android.material.card.MaterialCardView
-            android:visibility="gone"
-            android:id="@+id/trip_cycle_card"
-            app:strokeWidth="0dp"
-            app:strokeColor="@android:color/transparent"
-            map:cardElevation="0dp"
-            android:layout_width="match_parent"
-            android:background="@android:color/transparent"
-            android:backgroundTint="@android:color/transparent"
-            map:layout_constraintBottom_toBottomOf="parent"
-            map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintStart_toStartOf="parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            >
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_bottom_sheet"
-                android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:navGraph="@navigation/bottom_nav_graph"
-                />
-        </com.google.android.material.card.MaterialCardView>
-
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,13 +39,12 @@
                 android:src="@drawable/nav"
                 map:layout_constraintStart_toStartOf="parent"
                 map:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
+           <TextView
                 android:id="@+id/tv_atmodrive_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AtmoDrive"
-                android:textColor="@color/black"
+                android:textColor="@color/Title"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"
                 map:layout_constraintBottom_toBottomOf="@+id/mapgide1"
@@ -78,7 +52,63 @@
                 map:layout_constraintHorizontal_bias="0.551"
                 map:layout_constraintStart_toStartOf="parent"
                 map:layout_constraintTop_toTopOf="@+id/img_category" />
+            <ImageView
+                android:id="@+id/img_location_marker"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/customarker" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/intro_button_screen_back"
+                android:layout_marginHorizontal="@dimen/dimen12"
+                android:layout_marginEnd="@dimen/dimen24"
+                android:layout_marginBottom="@dimen/dimen12"
+                android:backgroundTint="@color/primary"
+                android:paddingVertical="@dimen/dimen12"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen14"
+                android:visibility="gone"
+                app:cornerRadius="@dimen/dimen24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_location_marker"
+                app:layout_constraintWidth_percent="0.40"
+                tools:visibility="visible" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel_trip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dimen12"
+                android:layout_marginStart="@dimen/dimen24"
+                android:layout_marginBottom="@dimen/dimen12"
+                android:backgroundTint="@color/white"
+                android:paddingVertical="@dimen/dimen12"
+                android:text="Cancel"
+                android:background="@drawable/intro_button_screen_back"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen14"
+                android:visibility="gone"
+                app:cornerRadius="@dimen/dimen24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_location_marker"
+                app:layout_constraintWidth_percent="0.40"
+                app:strokeColor="@color/primary"
+                app:strokeWidth="2dp"
+                tools:visibility="visible" />
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/location_card"
                 android:layout_width="match_parent"
@@ -94,18 +124,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_16sdp"
-                    android:paddingHorizontal="@dimen/_16sdp">
-
-                    <View
-                        android:id="@+id/drag_handle"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_4sdp"
-                        android:backgroundTint="@color/Hint"
-                        android:background="@color/Hint"
-                        map:layout_constraintEnd_toEndOf="parent"
-                        map:layout_constraintStart_toStartOf="parent"
-                        map:layout_constraintTop_toTopOf="parent"
-                        map:layout_constraintWidth_percent=".30"/>
+                    android:paddingHorizontal="@dimen/_16sdp"
+                    map:layout_constraintBottom_toTopOf="@+id/view_line"
+                    map:layout_constraintTop_toTopOf="@+id/view_line">
 
                     <View
                         android:id="@+id/view_dashed_line"
@@ -137,37 +158,38 @@
                         map:layout_constraintTop_toTopOf="@+id/tv_where_go" />
 
                     <TextView
-                        android:background="@drawable/phonever_background"
                         android:id="@+id/tv_your_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:text="B. 1256, Northern Ex. - 6 Oct."
-                        android:hint="Your Location"
-                        android:textColorHint="@color/Hint"
-                        android:textColor="@color/Title"
-                        android:textSize="@dimen/_12sdp"
                         android:layout_marginStart="@dimen/_16sdp"
+                        android:background="@drawable/phonever_background"
+                        android:hint="Your Location"
+                        android:padding="5dp"
+                        android:text="B. 1256, Northern Ex. - 6 Oct."
+                        android:textColor="@color/Title"
+                        android:textColorHint="@color/Hint"
+                        android:textSize="@dimen/_12sdp"
+                        map:layout_constraintEnd_toEndOf="parent"
                         map:layout_constraintStart_toEndOf="@+id/img_your_location"
-                        map:layout_constraintTop_toBottomOf="@+id/drag_handle" />
+                        map:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:id="@+id/view_line"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_1sdp"
-                        android:background="@color/Hint"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/Hint"
                         map:layout_constraintEnd_toEndOf="parent"
                         map:layout_constraintStart_toStartOf="@+id/tv_your_location"
                         map:layout_constraintTop_toBottomOf="@+id/tv_your_location" />
 
 
                     <TextView
-                        android:background="@drawable/phonever_background"
                         android:id="@+id/tv_where_go"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/phonever_background"
                         android:hint="Where to go?"
                         android:textColor="@color/Title"
                         android:textColorHint="@color/Hint"
@@ -191,15 +213,79 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/rounded_handle_bg"
+                map:layout_constraintBottom_toTopOf="@+id/location_card"
+                map:layout_constraintEnd_toEndOf="@+id/location_card"
+                map:srcCompat="@drawable/fe_target" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_find_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#97000000"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_find_captain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/find_location" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_find_captain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <TextView
+            android:id="@+id/tv_find_captain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finding captain..."
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_find_captain" />
+
+        <TextView
+            android:id="@+id/tv_cancel_find_captain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            android:background="@drawable/background_stroke_button"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_find_captain" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <include
         android:id="@+id/find_location_bottom_sheet"
-        layout="@layout/find_location_buttom_sheet"
-        android:visibility="gone">
+        layout="@layout/find_location_buttom_sheet">
     </include>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

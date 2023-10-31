@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_bottom_sheet"
+        tools:context=".maps.presenter.FindLocationFragment">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="@id/guide2"
+            app:layout_constraintStart_toStartOf="@id/guide1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:id="@+id/drag_handle_view"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_6sdp"
+                android:background="@drawable/rounded_handle_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".20" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:background="@color/Background"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drag_handle_view"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:paddingHorizontal="@dimen/_16sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/view_line"
+                    app:layout_constraintTop_toTopOf="@+id/view_line">
+
+                    <View
+                        android:id="@+id/dash_line"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/dashed_line"
+                        android:rotation="90"
+                        app:layout_constraintBottom_toTopOf="@+id/visitLocation"
+                        app:layout_constraintEnd_toEndOf="@+id/myLocation"
+                        app:layout_constraintStart_toStartOf="@+id/myLocation"
+                        app:layout_constraintTop_toBottomOf="@+id/myLocation" />
+
+                    <ImageView
+                        android:id="@+id/myLocation"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:src="@drawable/yourloc"
+                        app:layout_constraintBottom_toBottomOf="@+id/locationTextView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/locationTextView" />
+
+                    <ImageView
+                        android:id="@+id/visitLocation"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_14sdp"
+                        android:src="@drawable/location"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_where_go"
+                        app:layout_constraintStart_toStartOf="@+id/myLocation"
+                        app:layout_constraintTop_toTopOf="@+id/tv_where_go" />
+
+                    <TextView
+                        android:id="@+id/locationTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/phonever_background"
+                        android:text="B. 1256, Northern Ex. - 6 Oct."
+                        android:textColor="@color/Title"
+                        android:textColorHint="@color/Hint"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toEndOf="@+id/myLocation"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view_line"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/Hint"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/locationTextView"
+                        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+
+                    <TextView
+                        android:id="@+id/tv_where_go"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/phonever_background"
+                        android:hint="Where to go?"
+                        android:textColor="@color/Title"
+                        android:textColorHint="@color/Hint"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/confirm"
+                        app:layout_constraintStart_toStartOf="@+id/view_line"
+                        app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+                    <TextView
+                        android:id="@+id/confirm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Confirm"
+                        android:clickable="true"
+                        android:textColor="@color/primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_line" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/lay1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/cardLocation">
+
+                <ImageView
+                    android:id="@+id/pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pick" />
+
+                <TextView
+                    android:id="@+id/Choose_from_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="fill"
+                    android:text="Choose from map" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:text="Find location"
+                android:textColor="@color/Title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lay1" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:layout_editor_absoluteX="1dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

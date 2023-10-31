@@ -1,7 +1,7 @@
 package com.mostafahelal.AtmoDrive.auth.data.data_source.local
 
 import android.content.SharedPreferences
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Constants
+import com.mostafahelal.AtmoDrive.Utils.Constants
 import com.mostafahelal.AtmoDrive.auth.domain.model.UserData
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package com.mostafahelal.AtmoDrive.auth.data.data_source.Utils
+package com.mostafahelal.AtmoDrive.Utils
 
 data class ValidationResult(
     val successful: Boolean,

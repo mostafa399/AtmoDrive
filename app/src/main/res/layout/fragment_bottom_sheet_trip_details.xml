@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-
     android:id="@+id/bottom_sheet_trip_lifecycle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".BottomSheetTripDetailsFragment">
+    tools:context=".maps.BottomSheetTripDetailsFragment">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

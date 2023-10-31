@@ -2,7 +2,7 @@ package com.mostafahelal.AtmoDrive.Atmo_di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.Constants
+import com.mostafahelal.AtmoDrive.Utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav_graph"
-    app:startDestination="@id/bottomSheetRequestTripFragment">
+    app:startDestination="@id/findLocationFragment">
 
     <fragment
         android:id="@+id/bottomSheetRequestTripFragment"
-        android:name="com.mostafahelal.AtmoDrive.BottomSheetRequestTripFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.BottomSheetRequestTripFragment"
         android:label="fragment_bottom_sheet_request_trip"
         tools:layout="@layout/fragment_bottom_sheet_request_trip" >
         <action
@@ -16,7 +16,16 @@
     </fragment>
     <fragment
         android:id="@+id/bottomSheetTripDetailsFragment"
-        android:name="com.mostafahelal.AtmoDrive.BottomSheetTripDetailsFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.BottomSheetTripDetailsFragment"
         android:label="fragment_bottom_sheet_trip_details"
         tools:layout="@layout/fragment_bottom_sheet_trip_details" />
+    <fragment
+        android:id="@+id/findLocationFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.FindLocationFragment"
+        android:label="fragment_find_location"
+        tools:layout="@layout/fragment_find_location" >
+        <action
+            android:id="@+id/action_findLocationFragment_to_bottomSheetRequestTripFragment"
+            app:destination="@id/bottomSheetRequestTripFragment" />
+    </fragment>
 </navigation>

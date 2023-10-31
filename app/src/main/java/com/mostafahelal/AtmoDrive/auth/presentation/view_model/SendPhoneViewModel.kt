@@ -2,7 +2,7 @@ package com.mostafahelal.AtmoDrive.auth.presentation.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mostafahelal.AtmoDrive.auth.data.data_source.Utils.NetworkState
+import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.auth.data.data_source.local.MySharedPreferences
 import com.mostafahelal.AtmoDrive.auth.domain.use_case.IAuthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

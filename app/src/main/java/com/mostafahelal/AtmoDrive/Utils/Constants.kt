@@ -1,6 +1,9 @@
-package com.mostafahelal.AtmoDrive.auth.data.data_source.Utils
+package com.mostafahelal.AtmoDrive.Utils
+
+import com.google.android.gms.maps.model.LatLng
 
 object Constants {
+
     const val SHARED_PREFERENCE_NAME="PASSENGER"
     const val IS_FIRST_APP_LAUNCH="is_first_time"
     const val USER_IS_LOGGED_IN = "USER_IS_LOGGED_IN"
@@ -15,5 +18,10 @@ object Constants {
     const val LANG = "LANG"
     const val PASSENGERCODE = "PASSENGERCODE"
     const val MOBILE = "MOBILE"
+
+
+    var isBottomSheetOn = false
+    var pickUpLatLng: LatLng? = null
+    var dropOffLatLng: LatLng? = null
 
 }
