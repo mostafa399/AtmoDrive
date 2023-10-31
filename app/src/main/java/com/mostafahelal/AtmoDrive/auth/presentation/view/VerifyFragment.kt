@@ -24,7 +24,7 @@ import com.mostafahelal.AtmoDrive.Utils.visibilityGone
 import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.CheckCodeViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentVerifyBinding
-import com.mostafahelal.AtmoDrive.maps.MapsActivity
+import com.mostafahelal.AtmoDrive.maps.presenter.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

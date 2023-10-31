@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bottomSheetRequestTripFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.BottomSheetRequestTripFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.BottomSheetRequestTripFragment"
         android:label="fragment_bottom_sheet_request_trip"
         tools:layout="@layout/fragment_bottom_sheet_request_trip" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/bottomSheetTripDetailsFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.BottomSheetTripDetailsFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.BottomSheetTripDetailsFragment"
         android:label="fragment_bottom_sheet_trip_details"
         tools:layout="@layout/fragment_bottom_sheet_trip_details" />
     <fragment

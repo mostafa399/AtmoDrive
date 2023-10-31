@@ -5,7 +5,7 @@ import com.mostafahelal.AtmoDrive.maps.domain.model.MakeTrip
 
 data class MakeTripResponse(
     @SerializedName("data")
-    val data: CaptainData?,
+    val data: MakeTripData?,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")

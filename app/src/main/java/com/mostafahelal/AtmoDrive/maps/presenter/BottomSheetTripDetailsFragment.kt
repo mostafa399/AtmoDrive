@@ -1,4 +1,4 @@
-package com.mostafahelal.AtmoDrive.maps
+package com.mostafahelal.AtmoDrive.maps.presenter
 
 import android.os.Bundle
 import android.view.LayoutInflater

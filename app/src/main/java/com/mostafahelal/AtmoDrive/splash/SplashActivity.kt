@@ -9,7 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mostafahelal.AtmoDrive.MainActivity
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.SplashViewModel
-import com.mostafahelal.AtmoDrive.maps.MapsActivity
+import com.mostafahelal.AtmoDrive.maps.presenter.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
