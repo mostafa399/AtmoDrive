@@ -15,7 +15,7 @@ const val CHECK_CODE="check-code"
 const val REGISTER_PASSENGER="register-passenger"
 interface ApiServices {
     @FormUrlEncoded
-    @POST("send-code")
+    @POST(SEND_CODE)
     suspend fun sendCode(@Field("mobile") mobile:String):Response<SendCodeResponse>
     @FormUrlEncoded
     @POST(CHECK_CODE)

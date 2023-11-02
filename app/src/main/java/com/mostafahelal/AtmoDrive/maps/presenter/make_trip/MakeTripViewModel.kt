@@ -1,14 +1,16 @@
-package com.mostafahelal.AtmoDrive.maps.presenter
+package com.mostafahelal.AtmoDrive.maps.presenter.make_trip
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.maps.domain.use_case.ITripUseCase
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+@HiltViewModel
 class MakeTripViewModel @Inject constructor(private val iMakeTripUseCase: ITripUseCase) :ViewModel(){
     private val _makeTripResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
     val makeTripResult: StateFlow<NetworkState?> =_makeTripResult

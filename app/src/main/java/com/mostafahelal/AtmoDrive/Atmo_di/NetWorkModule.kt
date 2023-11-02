@@ -1,7 +1,9 @@
 package com.mostafahelal.AtmoDrive.Atmo_di
 
 import com.mostafahelal.AtmoDrive.Utils.Constants
+import com.mostafahelal.AtmoDrive.auth.data.data_source.local.MySharedPreferences
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
+import com.mostafahelal.AtmoDrive.maps.data.data_source.TripApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
@@ -58,5 +61,9 @@ object NetWorkModule {
     @Provides
     fun provideApiService(retrofit: Retrofit):ApiServices{
         return retrofit.create(ApiServices::class.java)
+    }
+    @Provides
+    fun provideTripApiService(retrofit: Retrofit):TripApiService{
+        return retrofit.create(TripApiService::class.java)
     }
 }

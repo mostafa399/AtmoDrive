@@ -33,9 +33,10 @@ class RegisterPassengerViewModel @Inject constructor(
            val response=authUseCase.registerPassenger(full_name, mobile, avatar, device_token, device_id, device_type,email)
             _RegisterState.value = NetworkState.LOADING
             if (response.isSuccessful()){
-                    if (response.isSuccessful()) {
+                    if (response.data?.status==true) {
                         _RegisterState.value = NetworkState.getLoaded(response)
-                        mySharedPreferences.saveRegisterResponse(response.data!!.data)
+                        mySharedPreferences. saveUserAccessToken("${response.data.data.rememberToken}")
+                        mySharedPreferences.saveRegisterResponse(response.data.data)
                     } else if (response.isFailed()){
                         _RegisterState.value = NetworkState.getErrorMessage("API request failed Register request failed")
                     }

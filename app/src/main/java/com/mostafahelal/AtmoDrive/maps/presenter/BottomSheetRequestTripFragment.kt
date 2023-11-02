@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.mostafahelal.AtmoDrive.databinding.FragmentBottomSheetRequestTripBinding
-import com.mostafahelal.AtmoDrive.maps.BottomSheetRequestTripFragmentDirections
 
 class BottomSheetRequestTripFragment : Fragment() {
     lateinit var binding:FragmentBottomSheetRequestTripBinding
@@ -32,7 +31,6 @@ class BottomSheetRequestTripFragment : Fragment() {
 //        yourView.setOnClickListener {
 //            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 //        }
-
 //        val bottomSheet =view.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
 //        binding.dragHandle.setOnClickListener {
 //                val behavior = BottomSheetBehavior.from(bottomSheet)
@@ -40,8 +38,7 @@ class BottomSheetRequestTripFragment : Fragment() {
 //                behavior.peekHeight = resources.displayMetrics.heightPixels // Set peek height
 //        }
         binding.btnRequsetTrip.setOnClickListener {
-            val action=
-                BottomSheetRequestTripFragmentDirections.actionBottomSheetRequestTripFragmentToBottomSheetTripDetailsFragment()
+            val action= BottomSheetRequestTripFragmentDirections.actionBottomSheetRequestTripFragmentToBottomSheetTripDetailsFragment()
             findNavController().navigate(action)
 
         }

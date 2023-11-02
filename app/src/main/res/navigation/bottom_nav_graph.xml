@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_bottom_sheet_trip_details" />
     <fragment
         android:id="@+id/findLocationFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.presenter.FindLocationFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.make_trip.FindLocationFragment"
         android:label="fragment_find_location"
         tools:layout="@layout/fragment_find_location" >
         <action
