@@ -3,7 +3,9 @@ package com.mostafahelal.AtmoDrive.maps.presenter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mostafahelal.AtmoDrive.databinding.ActivityMapsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MapsActivity : AppCompatActivity() {
 
     private var _binding: ActivityMapsBinding?=null

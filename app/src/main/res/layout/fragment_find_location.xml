@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back_bottom_sheet"
-        tools:context=".maps.presenter.FindLocationFragment">
+        tools:context=".maps.presenter.make_trip.FindLocationFragment">
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide1"
             android:layout_width="0dp"

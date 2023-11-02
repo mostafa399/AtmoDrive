@@ -57,10 +57,10 @@ import com.mostafahelal.AtmoDrive.Utils.showToast
 import com.mostafahelal.AtmoDrive.Utils.visibilityGone
 import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
 import com.mostafahelal.AtmoDrive.databinding.FragmentMaps2Binding
-import kotlinx.coroutines.runBlocking
+import com.mostafahelal.AtmoDrive.maps.presenter.make_trip.FindLocationFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import java.util.Locale
-
 
 class MapsFragment : Fragment(),OnMapReadyCallback {
 
@@ -90,7 +90,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?)
-    : View? {
+            : View? {
         binding = FragmentMaps2Binding.inflate(layoutInflater)
         return binding.root
     }
@@ -130,7 +130,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-//        mMap.isMyLocationEnabled = true
+        mMap.isMyLocationEnabled = true
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
                 val latLng = LatLng(result.lastLocation!!.latitude,result.lastLocation!!.longitude)
@@ -151,7 +151,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         val cameraPos = CameraPosition.builder().target(latLng).zoom(18f).build()
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPos))
     }
-    @SuppressLint("MissingPermission")
     private fun locationChecker() {
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(mLocationRequest!!)
@@ -160,7 +159,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         result.addOnCompleteListener { task ->
             try {
                 task.getResult(ApiException::class.java)
-                mMap.isMyLocationEnabled = true
                 getLocation()
 
             } catch (e: ApiException) {
@@ -186,14 +184,12 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                     LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
                     } } } } }
 
-    @SuppressLint("MissingPermission")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             Priority.PRIORITY_HIGH_ACCURACY -> {
                 when (resultCode) {
                     Activity.RESULT_OK -> {
-                        mMap.isMyLocationEnabled = true
                         getLocation()
                     }
 
@@ -211,28 +207,19 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             setUpDarkTheme(mMap)
         }
         mMap.setOnCameraIdleListener {
-            mMap.isMyLocationEnabled=false
+            setLocation(false)
             val loc = mMap.cameraPosition.target
             address = getAddressFromLatLng(loc)
             if(pickUpOrDropOf == 1){
                 Constants.pickUpLatLng = loc
-
             }
             else if (pickUpOrDropOf == 2){
-                    Constants.dropOffLatLng = loc
+                Constants.dropOffLatLng = loc
 
             }
 
         }
-        if (pickUpOrDropOf == 1 && Constants.pickUpLatLng != null && Constants.dropOffLatLng != null) {
-            val builder = LatLngBounds.Builder()
-            builder.include(Constants.pickUpLatLng!!)
-            builder.include(Constants.dropOffLatLng!!)
-            val bounds = builder.build()
-            val padding = 200 // Adjust padding as needed
-            val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.animateCamera(cameraUpdate)
-        }
+
         checkPermission()
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -241,35 +228,35 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             locationChecker()
         }
     }
-    @SuppressLint("MissingPermission")
     private fun onClicks() {
-    // CardView
-    binding.locationCard.setOnClickListener {
-        binding.imageButton.visibilityGone()
-        binding.locationCard.visibilityGone()
-        showBottomSheet()
+        // CardView
+        binding.locationCard.setOnClickListener {
+            Constants.pickUpLatLng=myLoc
+            binding.imageButton.visibilityGone()
+            binding.locationCard.visibilityGone()
+            showBottomSheet()
 
-        // Check if it's a pickup or drop-off
-        if (pickUpOrDropOf == 0) {
-            Constants.pickUpLatLng = myLoc!!
-            binding.tvYourLocation.text = address
+            // Check if it's a pickup or drop-off
+            if (pickUpOrDropOf == 0) {
+                Constants.pickUpLatLng = myLoc!!
+                binding.tvYourLocation.text = address
+            }
         }
-    }
 
-    binding.btnCancelTrip.setOnClickListener {
-        binding.imgLocationMarker.visibilityGone()
-        binding.btnChooseLocation.visibilityGone()
-        binding.btnCancelTrip.visibilityGone()
-        sheet.state = BottomSheetBehavior.STATE_EXPANDED
-        Constants.isBottomSheetOn = true
-    }
+        binding.btnCancelTrip.setOnClickListener {
+            binding.imgLocationMarker.visibilityGone()
+            binding.btnChooseLocation.visibilityGone()
+            binding.btnCancelTrip.visibilityGone()
+            sheet.state = BottomSheetBehavior.STATE_EXPANDED
+            Constants.isBottomSheetOn = true
+        }
 
-    binding.imageButton.setOnClickListener {
-        getLocation()
-        mMap.isMyLocationEnabled = true
+        binding.imageButton.setOnClickListener {
+            getLocation()
 
-    }
+        }
         binding.btnChooseLocation.setOnClickListener {
+            sharedViewModel.saveLocation(myLoc!!)
             binding.btnChooseLocation.visibilityGone()
             binding.btnCancelTrip.visibilityGone()
             binding.imageButton.visibilityGone()
@@ -297,15 +284,14 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                         dropOffMarker?.title = getAddressFromLatLng(latLng)
                     }
                 }
-                if (Constants.dropOffLatLng != null) {
                     dropOffMarker?.position = Constants.dropOffLatLng!!
-                }
+
 
                 // Hide the image view for drop-off
                 binding.imgLocationMarker.visibilityGone()
             }
         }
-}
+    }
     private fun addMarker(latLng: LatLng): Marker {
         val bitmapDescriptor =
             BitmapDescriptorFactory.fromBitmap(MapUtils.getMarkerForSeclctionPosition(requireContext()))
@@ -314,7 +300,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         )!!
     }
 
-    @SuppressLint("MissingPermission")
+
     private fun dealWithSharedViewModel() {
         sharedViewModel.getLocationType().observe(viewLifecycleOwner, Observer { state ->
             when (state) {
@@ -325,7 +311,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                     binding.btnChooseLocation.visibilityVisible()
                     sheet.state = BottomSheetBehavior.STATE_COLLAPSED
                     Constants.isBottomSheetOn = false
-                    mMap.isMyLocationEnabled=false
+                    setLocation(false)
+
 
                 }
                 LocationState.DROP_LOC.name -> {
@@ -335,16 +322,25 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                     binding.btnChooseLocation.visibilityVisible()
                     sheet.state = BottomSheetBehavior.STATE_COLLAPSED
                     Constants.isBottomSheetOn = false
-                    mMap.isMyLocationEnabled=false
+                    setLocation(false)
 
                 }
                 LocationState.CANCEL.name -> {
                     clearMap()
                 }
+                LocationState.CONTINUE.name -> {
+                    val builder = LatLngBounds.Builder()
+                    builder.include(Constants.pickUpLatLng!!)
+                    builder.include(Constants.dropOffLatLng!!)
+                    val bounds = builder.build()
+                    mMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200))
+
+                }
                 else -> {
                 }
             }
         })
+
     }
     private fun getAddressFromLatLng(latLng: LatLng): String {
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
@@ -450,13 +446,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         }
     }
 
-    private fun addMarkers(latLng: LatLng): Marker {
-        val bitmapDescriptor =
-            BitmapDescriptorFactory.fromBitmap(MapUtils.getMarkerForSeclctionPosition(requireContext()))
-        return mMap.addMarker(
-            MarkerOptions().position(latLng).flat(true).icon(bitmapDescriptor)
-        )!!
-    }
     private fun setUpDarkTheme(map: GoogleMap) {
         mMap = map
         try {
@@ -470,11 +459,10 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             Log.e("TAG", "Can't find style. Error: ", e)
         }
     }
-    @SuppressLint("MissingPermission")
     private fun clearMap(){
         sheet.state = BottomSheetBehavior.STATE_COLLAPSED
         binding.locationCard.visibilityVisible()
-        mMap.isMyLocationEnabled=true
+        setLocation(true)
         mMap.clear()
         moveCameraMap(myLoc!!)
         pickUpMarker = null
@@ -483,5 +471,17 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         Constants.dropOffLatLng = null
         pickUpOrDropOf = 0
         Constants.isBottomSheetOn = false
+    }
+    private fun setLocation(status:Boolean){
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+        }
+        mMap.isMyLocationEnabled = status
     }
 }
