@@ -7,21 +7,12 @@
 
     <fragment
         android:id="@+id/bottomSheetRequestTripFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.presenter.BottomSheetRequestTripFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.view.BottomSheetRequestTripFragment"
         android:label="fragment_bottom_sheet_request_trip"
-        tools:layout="@layout/fragment_bottom_sheet_request_trip" >
-        <action
-            android:id="@+id/action_bottomSheetRequestTripFragment_to_bottomSheetTripDetailsFragment"
-            app:destination="@id/bottomSheetTripDetailsFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bottomSheetTripDetailsFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.presenter.BottomSheetTripDetailsFragment"
-        android:label="fragment_bottom_sheet_trip_details"
-        tools:layout="@layout/fragment_bottom_sheet_trip_details" />
+        tools:layout="@layout/fragment_bottom_sheet_request_trip" />
     <fragment
         android:id="@+id/findLocationFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.presenter.make_trip.FindLocationFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.view.FindLocationFragment"
         android:label="fragment_find_location"
         tools:layout="@layout/fragment_find_location" >
         <action

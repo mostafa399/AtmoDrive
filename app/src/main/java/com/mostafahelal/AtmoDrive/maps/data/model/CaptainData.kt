@@ -49,6 +49,7 @@ data class CaptainData(
     val vehicleRegistrationPlate: String? = null
 ){
     fun asDomain() : DataCap{
-        return DataCap(dropoffLat, dropoffLng, dropoffLocationName, estimateCost, estimateTime, fullName, mobile, pickupLat, pickupLng)
+        return DataCap(dropoffLat, dropoffLng, dropoffLocationName, estimateCost,
+            estimateTime, fullName, mobile, pickupLat, pickupLng,pickupLocationName,tripColor,avatar)
     }
 }

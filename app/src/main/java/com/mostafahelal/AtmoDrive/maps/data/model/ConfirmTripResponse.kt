@@ -10,7 +10,7 @@ data class ConfirmTripResponse(
     @SerializedName("status")
     val status: Boolean,
     @SerializedName("trip_id")
-    val tripId: Int? = null
+    val tripId: Int
 ){
     fun asDomain():ConfirmTrip{
        return ConfirmTrip(message,status, tripId)

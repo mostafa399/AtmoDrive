@@ -2,8 +2,8 @@ package com.mostafahelal.AtmoDrive.maps.data.data_source
 
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.Utils.Resource
-import com.mostafahelal.AtmoDrive.maps.data.model.MakeTripResponse
-import com.mostafahelal.AtmoDrive.maps.data.model.TripDetailsResponse
+import com.mostafahelal.AtmoDrive.maps.domain.model.CancelBeforeCaptainAccept
+import com.mostafahelal.AtmoDrive.maps.domain.model.CancelTrip
 import com.mostafahelal.AtmoDrive.maps.domain.model.CaptainDetails
 import com.mostafahelal.AtmoDrive.maps.domain.model.ConfirmTrip
 import com.mostafahelal.AtmoDrive.maps.domain.model.MakeTrip
@@ -13,9 +13,9 @@ import javax.inject.Inject
 class TripDataSource @Inject constructor( private val tripApiService: TripApiService):ITripDataSource {
     override suspend fun makeTrip(
         distanceText: String,
-        distanceValue: Long,
+        distanceValue: Double,
         durationText: String,
-        durationValue: Long
+        durationValue: Int
     ): Resource<MakeTrip> {
         return try {
             val makeTripData = tripApiService.makeTrip(distanceText,distanceValue,durationText,durationValue)
@@ -73,4 +73,43 @@ class TripDataSource @Inject constructor( private val tripApiService: TripApiSer
         }catch (e: Exception){
             Resource.Error(NetworkState.getErrorMessage(e).msg.toString())
         }      }
+
+    override suspend fun cancelTripBeforeCaptainAccepts(trip_id: Int): Resource<CancelBeforeCaptainAccept> {
+        return try {
+            val tripDetails = tripApiService.cancelTripBeforeCaptainAccepts(trip_id)
+            if (tripDetails.status){
+                return Resource.Success(tripDetails.asDomain())
+            }else{
+                return Resource.Error(tripDetails.message)
+            }
+        }catch (e: Exception){
+            Resource.Error(NetworkState.getErrorMessage(e).msg.toString())
+        }
+    }
+
+    override suspend fun cancelTrip(trip_id: Int): Resource<CancelTrip> {
+        return try {
+            val tripDetails = tripApiService.cancelTrip(trip_id)
+            if (tripDetails.status){
+                return Resource.Success(tripDetails.asDomain())
+            }else{
+                return Resource.Error(tripDetails.message)
+            }
+        }catch (e: Exception){
+            Resource.Error(NetworkState.getErrorMessage(e).msg.toString())
+        }
+    }
+
+    override suspend fun onTrip(): Resource<TripDetails> {
+        return try {
+            val tripDetails = tripApiService.onTrip()
+            if (tripDetails.status){
+                return Resource.Success(tripDetails.asDomain())
+            }else{
+                return Resource.Error(tripDetails.message)
+            }
+        }catch (e: Exception){
+            Resource.Error(NetworkState.getErrorMessage(e).msg.toString())
+        }
+    }
 }

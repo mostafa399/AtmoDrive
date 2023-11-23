@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back_bottom_sheet"
-        tools:context=".maps.presenter.make_trip.FindLocationFragment">
+        tools:context=".maps.presenter.view.FindLocationFragment">
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide1"
             android:layout_width="0dp"
@@ -185,5 +185,13 @@
                 tools:layout_editor_absoluteX="1dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <ProgressBar
+        android:id="@+id/choose_loc_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

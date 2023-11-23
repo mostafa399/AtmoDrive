@@ -22,6 +22,10 @@ object MapUtils {
         val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.customarker)
         return Bitmap.createScaledBitmap(bitmap, 50, 100, false)
     }
+    fun getMyLocationBitmap(context: Context): Bitmap {
+        val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.my_location)
+        return Bitmap.createScaledBitmap(bitmap, 130, 130, true)
+    }
 
     fun getOriginDestinationMarkerBitmap(context: Context): Bitmap {
 //        val height = 20

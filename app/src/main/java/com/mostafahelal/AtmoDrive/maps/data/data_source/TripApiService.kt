@@ -1,21 +1,25 @@
 package com.mostafahelal.AtmoDrive.maps.data.data_source
 
+import com.mostafahelal.AtmoDrive.maps.data.model.CancelBeforeCaptainAcceptResponse
+import com.mostafahelal.AtmoDrive.maps.data.model.CancelTripResponse
 import com.mostafahelal.AtmoDrive.maps.data.model.CaptainDetailsResponse
 import com.mostafahelal.AtmoDrive.maps.data.model.ConfirmTripResponse
 import com.mostafahelal.AtmoDrive.maps.data.model.MakeTripResponse
 import com.mostafahelal.AtmoDrive.maps.data.model.TripDetailsResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface TripApiService {
+
     @POST("make-trip")
     @FormUrlEncoded
     suspend fun makeTrip(
         @Field("distance_text") distanceText: String,
-        @Field("distance_value") distanceValue: Long,
+        @Field("distance_value") distanceValue: Double,
         @Field("duration_text") durationText: String,
-        @Field("duration_value") durationValue: Long
+        @Field("duration_value") durationValue: Int
     ):MakeTripResponse
     @POST("confirm-trip")
     @FormUrlEncoded
@@ -41,6 +45,15 @@ interface TripApiService {
     suspend fun getTripDetails(
         @Field("trip_id") trip_id: Int,
     ): TripDetailsResponse
-
+    @POST("cancel-before-captain-accept")
+    @FormUrlEncoded
+    suspend fun cancelTripBeforeCaptainAccepts(
+        @Field("trip_id") trip_id: Int,
+    ): CancelBeforeCaptainAcceptResponse
+    suspend fun cancelTrip(
+        @Field("trip_id") trip_id: Int,
+    ): CancelTripResponse
+    @GET("on-trip")
+    suspend fun onTrip(): TripDetailsResponse
 
 }

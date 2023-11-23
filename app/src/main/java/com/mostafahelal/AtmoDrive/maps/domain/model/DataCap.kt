@@ -13,6 +13,8 @@ data class DataCap(
     val pickupLat: String? = null,
     val pickupLng: String? = null,
     val pickupLocationName: String? = null,
-    val tripColor: String? = null
+    val tripColor: String? = null,
+    val avatar :String? = null,
+
 
     )

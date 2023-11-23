@@ -17,7 +17,7 @@ import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.auth.presentation.view_model.RegisterPassengerViewModel
 import com.mostafahelal.AtmoDrive.databinding.FragmentCreateAccountBinding
-import com.mostafahelal.AtmoDrive.maps.presenter.MapsActivity
+import com.mostafahelal.AtmoDrive.maps.presenter.view.MapsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

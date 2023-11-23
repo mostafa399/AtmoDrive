@@ -10,44 +10,41 @@ import kotlin.math.sin
 object LocationHelper {
 
     fun getEstimatedTime(location1: LatLng, location2: LatLng): Int {
-        val dist = distance(
-            location1.latitude, location1.longitude,
-            location2.longitude, location2.latitude
+        val dist = getEstimatedDistance(
+            location1,
+            location2
         )
 
         return ((dist / 50) * 60).toInt()
     }
 
-    private fun distance(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double,
+    fun getEstimatedDistance(
+        pickUpLocation: LatLng,
+        dropOffLocation: LatLng
     ): Double {
-        return if (lat1 == lat2 && lon1 == lon2) {
+        return if (pickUpLocation.latitude == dropOffLocation.latitude && pickUpLocation.longitude == dropOffLocation.longitude) {
             0.0
         } else {
-            val theta = lon1 - lon2
-            var dist =
-                sin(Math.toRadians(lat1)) * sin(
-                    Math.toRadians(lat2)
-                ) + cos(Math.toRadians(lat1)) * cos(
+            val theta = pickUpLocation.longitude - dropOffLocation.longitude
+            var distance =
+                sin(Math.toRadians(pickUpLocation.latitude)) * sin(
+                    Math.toRadians(dropOffLocation.latitude)
+                ) + cos(Math.toRadians(pickUpLocation.latitude)) * cos(
                     Math.toRadians(
-                        lat2
+                        dropOffLocation.latitude
                     )
                 ) * cos(Math.toRadians(theta))
-            dist = acos(dist)
+            distance = acos(distance)
 
-            dist = Math.toDegrees(dist)
-            dist *= 60 * 1.1515
+            distance = Math.toDegrees(distance)
+            distance *= 60 * 1.1515
 
 
-            dist *= 1.609344
+            distance *= 1.609344
 
-            dist
+            distance
         }
     }
-
 
     fun decodePoly(encoded: String?): List<LatLng> {
         val poly: MutableList<LatLng> = ArrayList()
@@ -105,8 +102,7 @@ object LocationHelper {
     }
 
 
-
-    fun getBearing(begin: LatLng, end: LatLng): Float {
+     fun getBearing(begin: LatLng, end: LatLng): Float {
         val dLon = end.longitude - begin.longitude
         val x = Math.sin(Math.toRadians(dLon)) * Math.cos(Math.toRadians(end.latitude))
         val y = (Math.cos(Math.toRadians(begin.latitude)) * Math.sin(Math.toRadians(end.latitude))
@@ -116,7 +112,7 @@ object LocationHelper {
         val bearing = Math.toDegrees(Math.atan2(x, y))
         return bearing.toFloat()
     }
-
+}
 
 //    suspend fun drawPolyline(response: DirectionResponse): PolylineOptions {
 //
@@ -129,7 +125,7 @@ object LocationHelper {
 //    }
 
 
-}
+
 
 //    suspend fun getDirectionsApi(
 //        str_origin: String,

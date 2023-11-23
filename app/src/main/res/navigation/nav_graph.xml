@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/MapsFragment"
-        android:name="com.mostafahelal.AtmoDrive.maps.presenter.MapsFragment"
+        android:name="com.mostafahelal.AtmoDrive.maps.presenter.view.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" >
         <action

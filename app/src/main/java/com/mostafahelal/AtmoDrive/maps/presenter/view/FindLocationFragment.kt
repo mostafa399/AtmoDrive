@@ -1,6 +1,5 @@
-package com.mostafahelal.AtmoDrive.maps.presenter.make_trip
+package com.mostafahelal.AtmoDrive.maps.presenter.view
 
-import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,13 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.maps.model.LatLng
 import com.mostafahelal.AtmoDrive.Utils.Constants
 import com.mostafahelal.AtmoDrive.Utils.LocationState
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
@@ -23,22 +18,18 @@ import com.mostafahelal.AtmoDrive.Utils.Resource
 import com.mostafahelal.AtmoDrive.Utils.showToast
 import com.mostafahelal.AtmoDrive.Utils.visibilityGone
 import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
-import com.mostafahelal.AtmoDrive.auth.presentation.view.LoginFragmentDirections
 import com.mostafahelal.AtmoDrive.databinding.FragmentFindLocationBinding
 import com.mostafahelal.AtmoDrive.maps.domain.model.MakeTrip
-import com.mostafahelal.AtmoDrive.maps.presenter.SharedViewModel
+import com.mostafahelal.AtmoDrive.maps.presenter.viewmodel.SharedViewModel
+import com.mostafahelal.AtmoDrive.maps.presenter.viewmodel.TripViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.IOException
-import java.util.Locale
+
 @AndroidEntryPoint
 class FindLocationFragment : Fragment() {
     lateinit var binding:FragmentFindLocationBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val viewModel:MakeTripViewModel by viewModels()
+    private val viewModel:TripViewModel by viewModels()
     var locationState = LocationState.NONE
     var pickUpAddress: String? = null
     var dropOffAddress: String? = null
@@ -49,7 +40,6 @@ class FindLocationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding= FragmentFindLocationBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
@@ -69,18 +59,18 @@ class FindLocationFragment : Fragment() {
             when (locationState) {
                 LocationState.PICKUP_LOC -> {
                     if (Constants.pickUpLatLng != null) {
-                         binding.locationTextView.text = getAddressFromLatLng(Constants.pickUpLatLng!!)
+                         binding.locationTextView.text = sharedViewModel.getAddressFromLatLng(Constants.pickUpLatLng!!,requireContext())
 
                     }
                 }
                 LocationState.DROP_LOC -> {
                     if (Constants.dropOffLatLng != null) {
-                        binding.tvWhereGo.text=getAddressFromLatLng(Constants.dropOffLatLng!!)
+                        binding.tvWhereGo.text=sharedViewModel.getAddressFromLatLng(Constants.dropOffLatLng!!,requireContext())
 
                     }
                 }
                 LocationState.CANCEL -> {
-                    binding.locationTextView.text = getAddressFromLatLng(Constants.pickUpLatLng!!)
+                    binding.locationTextView.text = sharedViewModel.getAddressFromLatLng(Constants.pickUpLatLng!!,requireContext())
                     binding.tvWhereGo.text = ""
                 }
                 LocationState.NONE -> {
@@ -106,10 +96,11 @@ class FindLocationFragment : Fragment() {
             sharedViewModel.setLocType(locationState.name)
         }
         binding.confirm.setOnClickListener {
+
             if (pickUpAddress!=null&&dropOffAddress!=null){
                 locationState = LocationState.CONTINUE
                 sharedViewModel.setLocType(locationState.name)
-                viewModel.makeTrip("500 KM",500,"160 Min",160)
+                viewModel.makeTrip()
                 observeOnMakeTrip()
             }
             else{
@@ -123,51 +114,42 @@ class FindLocationFragment : Fragment() {
         sharedViewModel.getLocation().observe(viewLifecycleOwner, Observer {
 
             if (locationState == LocationState.PICKUP_LOC && Constants.pickUpLatLng != null){
-                binding.locationTextView.text = getAddressFromLatLng(Constants.pickUpLatLng!!)
+                binding.locationTextView.text = sharedViewModel.getAddressFromLatLng(Constants.pickUpLatLng!!,requireContext())
                 pickUpAddress = it.toString()
             }else if (locationState == LocationState.DROP_LOC && Constants.dropOffLatLng != null){
-                binding.tvWhereGo.text = getAddressFromLatLng(Constants.dropOffLatLng!!)
+                binding.tvWhereGo.text = sharedViewModel.getAddressFromLatLng(Constants.dropOffLatLng!!,requireContext())
                 dropOffAddress = it.toString()
             }else if (locationState == LocationState.CANCEL){
-                binding.locationTextView.text = getAddressFromLatLng(Constants.pickUpLatLng!!)
+                binding.locationTextView.text = sharedViewModel.getAddressFromLatLng(Constants.pickUpLatLng!!,requireContext())
                 binding.tvWhereGo.text = ""
             }
 
         })
     }
 
-    private fun getAddressFromLatLng(latLng: LatLng): String {
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        try {
-            val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            if (addresses?.isNotEmpty()!!) {
-                val address = addresses[0]
-                return address.getAddressLine(0)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            showToast("Error getting address")
-        }
-        return "Address not found"
-    }
     private fun observeOnMakeTrip(){
         lifecycleScope.launch {
-
             viewModel.makeTripResult.collect{networkState->
                 when(networkState?.status){
                     NetworkState.Status.SUCCESS -> {
-                        withContext(Dispatchers.Main) {
-                            val action = FindLocationFragmentDirections.actionFindLocationFragmentToBottomSheetRequestTripFragment()
+                            binding.chooseLocProgressBar.visibilityGone()
+                            val data = networkState.data as Resource<MakeTrip>
+                            sharedViewModel.setMakeTripData(data.data?.data!!)
+                            val action =
+                                FindLocationFragmentDirections.actionFindLocationFragmentToBottomSheetRequestTripFragment()
                             findNavController().navigate(action)
-                        }
 
                     }
                     NetworkState.Status.FAILED -> {
-                        Log.d("LoginFragment", networkState.msg.toString())
+                        binding.chooseLocProgressBar.visibilityGone()
+
+                        Log.d("FindLocationFragment", networkState.msg.toString())
 
 
                     }
                     NetworkState.Status.RUNNING -> {
+                        binding.chooseLocProgressBar.visibilityVisible()
+
                     }
                     else -> Unit
                 }

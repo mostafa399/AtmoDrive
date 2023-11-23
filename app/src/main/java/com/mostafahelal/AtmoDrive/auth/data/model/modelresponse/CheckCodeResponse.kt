@@ -13,6 +13,6 @@ data class CheckCodeResponse(
     val status: Boolean
 ){
     public fun asDomain():CodeResponse{
-        return CodeResponse(message,status,data.isNew,data.isDomain())
+        return CodeResponse(message,status,data.isDomain())
     }
 }

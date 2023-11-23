@@ -1,7 +1,7 @@
 package com.mostafahelal.AtmoDrive.Atmo_di
 
 import com.mostafahelal.AtmoDrive.Utils.Constants
-import com.mostafahelal.AtmoDrive.auth.data.data_source.local.MySharedPreferences
+import com.mostafahelal.AtmoDrive.Utils.ISharedPreferencesManager
 import com.mostafahelal.AtmoDrive.auth.data.data_source.remote.ApiServices
 import com.mostafahelal.AtmoDrive.maps.data.data_source.TripApiService
 import dagger.Module
@@ -22,7 +22,7 @@ import javax.inject.Singleton
 object NetWorkModule {
     @Provides
     @Singleton
-    fun provideOkhttp():OkHttpClient{
+    fun provideOkhttp(iSharedPreferencesManager:ISharedPreferencesManager):OkHttpClient{
         val client=OkHttpClient.Builder()
             .connectTimeout(50,TimeUnit.SECONDS)
             .writeTimeout(50,TimeUnit.SECONDS)
@@ -37,7 +37,7 @@ object NetWorkModule {
                 val url = originalUrl.newBuilder().build()
                 val requestBuilder = originalRequest.newBuilder().url(url)
                     .addHeader("Accept", "application/json")
-                    .addHeader("Authorization", "Bearer ${Constants.USER_IS_LOGGED_IN}")
+                    .addHeader("Authorization", "Bearer ${iSharedPreferencesManager.getString(Constants.TOKEN)}")
                 val request = requestBuilder.build()
                 val response = chain.proceed(request)
                 response.code
@@ -66,4 +66,5 @@ object NetWorkModule {
     fun provideTripApiService(retrofit: Retrofit):TripApiService{
         return retrofit.create(TripApiService::class.java)
     }
+
 }

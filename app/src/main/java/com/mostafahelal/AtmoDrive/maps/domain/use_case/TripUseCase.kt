@@ -1,6 +1,8 @@
 package com.mostafahelal.AtmoDrive.maps.domain.use_case
 
 import com.mostafahelal.AtmoDrive.Utils.Resource
+import com.mostafahelal.AtmoDrive.maps.domain.model.CancelBeforeCaptainAccept
+import com.mostafahelal.AtmoDrive.maps.domain.model.CancelTrip
 import com.mostafahelal.AtmoDrive.maps.domain.model.CaptainDetails
 import com.mostafahelal.AtmoDrive.maps.domain.model.ConfirmTrip
 import com.mostafahelal.AtmoDrive.maps.domain.model.MakeTrip
@@ -11,9 +13,9 @@ import javax.inject.Inject
 class TripUseCase  @Inject constructor(private val iMakeTripRepository: ITripRepository) : ITripUseCase{
     override suspend fun makeTrip(
         distanceText: String,
-        distanceValue: Long,
+        distanceValue: Double,
         durationText: String,
-        durationValue: Long
+        durationValue: Int
     ): Resource<MakeTrip> {
         return iMakeTripRepository.makeTrip(distanceText, distanceValue, durationText, durationValue)
     }
@@ -41,6 +43,18 @@ class TripUseCase  @Inject constructor(private val iMakeTripRepository: ITripRep
 
     override suspend fun getTripDetails(trip_id: Int): Resource<TripDetails> {
         return iMakeTripRepository.getTripDetails(trip_id)
+    }
+
+    override suspend fun cancelTripBeforeCaptainAccepts(trip_id: Int): Resource<CancelBeforeCaptainAccept> {
+        return iMakeTripRepository.cancelTripBeforeCaptainAccepts(trip_id)
+    }
+
+    override suspend fun cancelTrip(trip_id: Int): Resource<CancelTrip> {
+        return iMakeTripRepository.cancelTrip(trip_id)
+    }
+
+    override suspend fun onTrip(): Resource<TripDetails> {
+        return iMakeTripRepository.onTrip()
     }
 
 }

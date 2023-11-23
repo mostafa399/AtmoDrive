@@ -27,7 +27,7 @@
             android:value="@string/apiKey" />
 
         <activity
-            android:name=".maps.presenter.MapsActivity"
+            android:name=".maps.presenter.view.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait"/>

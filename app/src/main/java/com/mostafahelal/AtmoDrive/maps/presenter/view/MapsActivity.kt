@@ -1,4 +1,4 @@
-package com.mostafahelal.AtmoDrive.maps.presenter
+package com.mostafahelal.AtmoDrive.maps.presenter.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

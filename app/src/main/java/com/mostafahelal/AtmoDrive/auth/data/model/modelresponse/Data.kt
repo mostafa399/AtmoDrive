@@ -6,32 +6,32 @@ import com.mostafahelal.AtmoDrive.auth.domain.model.UserData
 
 data class Data(
     @SerializedName("avatar")
-    val avatar: String?,
+    val avatar: String,
     @SerializedName("email")
-    val email: String?,
+    val email: String,
     @SerializedName("full_name")
     val fullName: String,
     @SerializedName("is_dark_mode")
-    val isDarkMode: Int?,
+    val isDarkMode: Int,
     @SerializedName("lang")
-    val lang: String?,
+    val lang: String,
     @SerializedName("mobile")
-    val mobile: String?,
+    val mobile: String,
     @SerializedName("options")
-    val options: Options? ,
+    val options: Options ,
     @SerializedName("passenger_code")
-    val passengerCode: String?,
+    val passengerCode: String,
     @SerializedName("rate")
-    val rate: Int?,
+    val rate: Int,
     @SerializedName("remember_token")
-    val rememberToken: String?,
+    val rememberToken: String,
     @SerializedName("shake_phone")
-    val shakePhone: Int?,
+    val shakePhone: Int,
     @SerializedName("status")
-    val status: Int?,
+    val status: Int,
     @SerializedName("suspend")
-    val suspend: Int?
+    val suspend: Int
 ){
-    public fun asDomain():UserData=UserData(avatar,email,fullName
+     fun asDomain():UserData=UserData(avatar,email,fullName
         ,isDarkMode,lang,mobile,passengerCode,rate,rememberToken,status,suspend)
 }
