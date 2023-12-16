@@ -20,6 +20,10 @@ class Constants {
         const val LANG = "LANG"
         const val PASSENGERCODE = "PASSENGERCODE"
         const val MOBILE = "MOBILE"
+        const val CaptainName = "CaptainMame"
+        const val CaptainCost = "CaptainCost"
+        const val CaptainMobile = "CaptainMobile"
+        const val CAptainAvatar = "CAptainAvatar"
         const val TRIPID = "TRIPID"
         var isBottomSheetOn = false
         var pickUpLatLng: LatLng? = null

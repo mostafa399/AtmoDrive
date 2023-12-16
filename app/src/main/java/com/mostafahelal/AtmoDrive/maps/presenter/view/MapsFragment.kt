@@ -10,8 +10,6 @@ import android.content.res.Resources
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,15 +21,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsResponse
@@ -55,9 +54,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
 import com.google.firebase.database.ktx.database
-import com.mostafahelal.AtmoDrive.MainActivity
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.Utils.AnimationUtils
 import com.mostafahelal.AtmoDrive.Utils.Constants
@@ -71,7 +68,6 @@ import com.mostafahelal.AtmoDrive.Utils.TripObject
 import com.mostafahelal.AtmoDrive.Utils.showToast
 import com.mostafahelal.AtmoDrive.Utils.visibilityGone
 import com.mostafahelal.AtmoDrive.Utils.visibilityVisible
-import com.mostafahelal.AtmoDrive.databinding.ActivityMapsBinding
 import com.mostafahelal.AtmoDrive.databinding.FragmentMaps2Binding
 import com.mostafahelal.AtmoDrive.maps.domain.model.TripDetails
 import com.mostafahelal.AtmoDrive.maps.presenter.viewmodel.SharedViewModel
@@ -98,6 +94,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
     private var myNavHostFragment: NavHostFragment? = null
     private var pickUpMarker: Marker? = null
     private var dropOffMarker: Marker? = null
+    private val viewModel: TripViewModel by viewModels()
     private var address=""
     private var myLoc: LatLng? = null
     private var pickUpOrDropOf = 0
@@ -109,7 +106,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
     private var previousLatLng: LatLng? = null
     private var currentLatLng: LatLng? = null
     private var valueAnimator: ValueAnimator? = null
-    private val viewModel: TripViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMaps2Binding.inflate(layoutInflater)
@@ -120,25 +116,24 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMaps2Binding.bind(view)
-        myNavHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment11) as NavHostFragment
-
-        viewModel.onTrip()
-//        mMap.isMyLocationEnabled = true
+        //initMap
+        mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment!!.getMapAsync(this)
         init()
+        onClicks()
+        myNavHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment11) as NavHostFragment
+        viewModel.onTrip()
         initBottomSheets()
         handleBottomSheetSize()
         onBackPressHandle()
         dealWithSharedViewModel()
-        onClicks()
         observeOnRequestTrip()
-        observer()
+        observers()
 
     }
 
     private fun init() {
-        //initMap
-        mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment!!.getMapAsync(this)
+
 
         database = Firebase.database.reference
         if (mFusedLocationProviderClient == null) {
@@ -225,17 +220,13 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             }
         }
     }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMyLocationButtonEnabled = false
-        mMap.isMyLocationEnabled=true
-
         if (resources.getString(R.string.mode) == "Night") {
             setUpDarkTheme(mMap)
         }
         mMap.setOnCameraIdleListener {
-//            mMap.isMyLocationEnabled=false
             val loc = mMap.cameraPosition.target
             address = getAddressFromLatLng(loc)
             if(pickUpOrDropOf == 1){
@@ -247,8 +238,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             }
 
         }
-
         checkPermission()
+
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -257,26 +248,19 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         }
     }
     private fun onClicks() {
-        // logout
-        binding.imgCategory.setOnClickListener {
-            shared.clearString(Constants.TOKEN)
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
-        }
+       // CardView
+        try { binding.locationCard.setOnClickListener {
 
-
-        // CardView
-        binding.locationCard.setOnClickListener {
-            Constants.pickUpLatLng=myLoc
-            binding.imageButton.visibilityGone()
-            binding.locationCard.visibilityGone()
-            showBottomSheet(R.navigation.bottom_nav_graph)
-            // Check if it's a pickup or drop-off
-            if (pickUpOrDropOf == 0) {
-                Constants.pickUpLatLng = myLoc!!
+                Constants.pickUpLatLng=myLoc
+                binding.imageButton.visibilityGone()
+                binding.locationCard.visibilityGone()
+                showBottomSheet(R.navigation.bottom_nav_graph)
                 binding.tvYourLocation.text = address
+
+
             }
+        }catch (e:ExceptionInInitializerError){
+            showToast("Please Wait Map GetReady")
         }
 
 
@@ -324,18 +308,14 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                 }
                     dropOffMarker?.position = Constants.dropOffLatLng!!
 
-
-                // Hide the image view for drop-off
                 binding.imgLocationMarker.visibilityGone()
             }
         }
         binding.tvCancelFindCaptain.setOnClickListener {
             binding.layoutFindLocation.visibilityGone()
-
-            // cancel trip
-            viewModel.cancelBeforeCaptain()
-
+            viewModel.cancelBeforeCaptain(Constants.tripId)
             clearMap()
+
 
         }
     }
@@ -463,10 +443,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                 if ((fragment is FindLocationFragment ||fragment is BottomSheetTripDetailsFragment)
                     && sheet.state == BottomSheetBehavior.STATE_EXPANDED
                 ) {
-                    if (fragment is FindLocationFragment){
-                        clearMap()
 
-                    }
+                        clearMap()
 
 //                        sheet.state = BottomSheetBehavior.STATE_COLLAPSED
 //                        binding.locationCard.visibilityVisible()
@@ -492,8 +470,8 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             PackageManager.PERMISSION_GRANTED && ActivityCompat.
             checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(
+            requestPermissions(
+                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ), 2
@@ -532,6 +510,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         Constants.dropOffLatLng = null
         pickUpOrDropOf = 0
         status = ""
+        Constants.tripId=0
         binding.tvWhereGo.text=""
         binding.tvYourLocation.text=sharedViewModel.getAddressFromLatLng(myLoc!!,requireContext())
         Constants.isBottomSheetOn = false
@@ -574,7 +553,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                 if (trip != null){
                     updateCarLocation(LatLng(trip.lat.toDouble(),trip.lng.toDouble()))
                 }else {
-
                 }
 
             }
@@ -594,8 +572,6 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         builder.include(dropOff)
         val bounds = builder.build()
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 150))
-
-        //draw path
 
     }
     private fun updateCarLocation(latLng: LatLng) {
@@ -663,7 +639,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         sharedViewModel.getRequestTrip().observe(viewLifecycleOwner, Observer {
 
             if (it){
-                findingCaptainWithTimeout()
+                findingCaptain()
                 listenerOnTrip()
             }else if(!it){
                 showToast("tripCanceled")
@@ -679,44 +655,23 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
         binding.locationCard.visibilityGone()
         binding.imageButton.visibilityGone()
     }
-    private fun findingCaptainWithTimeout() {
-        // Set a timeout of 50 seconds
-        val timeoutMillis = 50000L
 
-        // Initialize a handler
-        val handler = Handler()
-
-        // Post a delayed runnable to check if findingCaptain has completed within the timeout
-        handler.postDelayed({
-            if (sheet.state != BottomSheetBehavior.STATE_COLLAPSED) {
-                // If findingCaptain has not completed, show a toast
-                showToast("No captains found")
-            }
-        }, timeoutMillis)
-
-        // Call your original findingCaptain function
-        findingCaptain()
-
-        // Remove the callbacks to prevent them from running if findingCaptain completes within the timeout
-        handler.removeCallbacksAndMessages(null)
-    }
-
-    private fun observer(){
+    private fun observers(){
         lifecycleScope.launch {
-            viewModel.onTripResult.collect{ networkState ->
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.onTrip.collect{ networkState ->
                 when(networkState?.status){
                     NetworkState.Status.SUCCESS ->{
                         val data = networkState.data as Resource<TripDetails>
                         Constants.tripId = data.data?.tripData?.tripId!!
                         if(data.data.tripData.tripStatus!! == "pending"){
-                            findingCaptainWithTimeout()
+                            findingCaptain()
                         }else{
                             setUpTrip(data.data)
                             listenerOnTrip()
                         }
                     }
                     NetworkState.Status.FAILED ->{
-                        showToast(networkState.msg.toString())
                     }
                     NetworkState.Status.RUNNING ->{
                     }
@@ -724,12 +679,12 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
                 }
             }
         }
+        }
         lifecycleScope.launch {
-            viewModel.cancelBeforeCaptainResult.collect{ networkState ->
+            viewModel.cancelBeforeCaptain.collect{ networkState ->
                 when(networkState?.status){
                     NetworkState.Status.SUCCESS ->{
-//                        val data = networkState.data as Resource<CancelBeforeCaptainAccept>
-                        showToast("Trip Canceled Before Captain Accept ...!")
+                        Constants.tripId = 0
                     }
                     NetworkState.Status.FAILED ->{
                         showToast(networkState.msg.toString())
@@ -741,6 +696,7 @@ class MapsFragment : Fragment(),OnMapReadyCallback {
             }
         }
         }
+
     @SuppressLint("MissingPermission")
     private fun setUpTrip(tripData:TripDetails){
         Constants.tripId = tripData.tripData?.tripId!!

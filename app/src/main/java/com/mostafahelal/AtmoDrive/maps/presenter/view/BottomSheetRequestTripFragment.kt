@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
 import com.mostafahelal.AtmoDrive.R
 import com.mostafahelal.AtmoDrive.Utils.Constants
-import com.mostafahelal.AtmoDrive.Utils.ISharedPreferencesManager
 import com.mostafahelal.AtmoDrive.Utils.LocationState
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.Utils.Resource
@@ -30,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.Locale
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class BottomSheetRequestTripFragment : Fragment() {
@@ -78,7 +76,7 @@ class BottomSheetRequestTripFragment : Fragment() {
     }
     private fun observeOnConfirmTrip(){
         lifecycleScope.launch {
-            viewModel.confirTrip.collect{networkState->
+            viewModel.confirmTrip.collect{ networkState->
                 when(networkState?.status){
                     NetworkState.Status.SUCCESS->{
                             binding.requestTripProgressBar.visibilityGone()

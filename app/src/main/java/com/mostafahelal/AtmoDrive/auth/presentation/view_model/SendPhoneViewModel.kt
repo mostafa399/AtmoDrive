@@ -24,11 +24,10 @@ class SendPhoneViewModel @Inject constructor(
             _SendCodeResult.value = NetworkState.LOADING
             try {
                 val response = authUseCase.sendPhone(phone)
-                if (response.isSuccessful()) {
-                    _SendCodeResult.value = NetworkState.getLoaded(response)
+                if (response.data?.status!!) {
+                    _SendCodeResult.value = NetworkState.getLoaded(response.data)
                 } else if (response.isFailed()){
                     _SendCodeResult.value = NetworkState.getErrorMessage("API request failed Send code request failed")
-                   // _SendCodeResult.value=NetworkState.getLoaded(response)
                 }
             } catch (e: Exception) {
                 _SendCodeResult.value = NetworkState.getErrorMessage(e)

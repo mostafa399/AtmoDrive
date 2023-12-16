@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 import com.mostafahelal.AtmoDrive.maps.domain.model.CaptainDetails
 
 data class CaptainDetailsResponse(
-    @SerializedName("data")
-    val data: CaptainData? = null,
     @SerializedName("message")
     val message: String,
     @SerializedName("status")
-    val status: Boolean
+    val status: Boolean,
+    @SerializedName("data")
+    val data: CaptainData? = null
 ){
-    fun asDomain():CaptainDetails{
+  public fun asDomain():CaptainDetails{
         return CaptainDetails(message,status,data?.asDomain())
     }
 }

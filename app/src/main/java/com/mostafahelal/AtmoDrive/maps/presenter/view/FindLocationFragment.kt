@@ -129,7 +129,7 @@ class FindLocationFragment : Fragment() {
 
     private fun observeOnMakeTrip(){
         lifecycleScope.launch {
-            viewModel.makeTripResult.collect{networkState->
+            viewModel.makeTrip.collect{ networkState->
                 when(networkState?.status){
                     NetworkState.Status.SUCCESS -> {
                             binding.chooseLocProgressBar.visibilityGone()

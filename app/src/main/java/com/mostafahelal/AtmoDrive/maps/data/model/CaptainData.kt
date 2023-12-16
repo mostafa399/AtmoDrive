@@ -6,49 +6,45 @@ import com.mostafahelal.AtmoDrive.maps.domain.model.MakeTripData
 
 data class CaptainData(
     @SerializedName("avatar")
-    val avatar: String? = null,
-    @SerializedName("blood_type")
-    val bloodType: Any? = null,
+    val avatar: String,
     @SerializedName("captain_code")
-    val captainCode: String? = null,
+    val captainCode: String,
     @SerializedName("dropoff_lat")
-    val dropoffLat: String? = null,
+    val dropoffLat: String,
     @SerializedName("dropoff_lng")
-    val dropoffLng: String? = null,
+    val dropoffLng: String,
     @SerializedName("dropoff_location_name")
-    val dropoffLocationName: String? = null,
+    val dropoffLocationName: String,
     @SerializedName("estimate_cost")
-    val estimateCost: Int? = null,
+    val estimateCost: Int,
     @SerializedName("estimate_time")
-    val estimateTime: Int? = null,
+    val estimateTime: Int,
     @SerializedName("full_name")
-    val fullName: String? = null,
+    val fullName: String,
     @SerializedName("gender")
-    val gender: String? = null,
+    val gender: String,
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
     @SerializedName("mobile")
-    val mobile: String? = null,
+    val mobile: String,
     @SerializedName("pickup_lat")
-    val pickupLat: String? = null,
+    val pickupLat: String,
     @SerializedName("pickup_lng")
-    val pickupLng: String? = null,
+    val pickupLng: String,
     @SerializedName("pickup_location_name")
-    val pickupLocationName: String? = null,
+    val pickupLocationName: String,
     @SerializedName("rate")
-    val rate: Int? = null,
+    val rate: Int,
     @SerializedName("trip_color")
-    val tripColor: String? = null,
-    @SerializedName("vehicle")
-    val vehicle: String? = null,
+    val tripColor: String,
     @SerializedName("vehicle_class")
-    val vehicleClass: Any? = null,
+    val vehicleClass: String? = null,
     @SerializedName("vehicle_model")
-    val vehicleModel: String? = null,
+    val vehicleModel: String,
     @SerializedName("vehicle_registration_plate")
-    val vehicleRegistrationPlate: String? = null
+    val vehicleRegistrationPlate: String
 ){
-    fun asDomain() : DataCap{
+    public fun asDomain() : DataCap{
         return DataCap(dropoffLat, dropoffLng, dropoffLocationName, estimateCost,
             estimateTime, fullName, mobile, pickupLat, pickupLng,pickupLocationName,tripColor,avatar)
     }

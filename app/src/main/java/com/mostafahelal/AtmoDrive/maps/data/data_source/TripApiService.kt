@@ -50,6 +50,8 @@ interface TripApiService {
     suspend fun cancelTripBeforeCaptainAccepts(
         @Field("trip_id") trip_id: Int,
     ): CancelBeforeCaptainAcceptResponse
+    @POST("cancel-trip")
+    @FormUrlEncoded
     suspend fun cancelTrip(
         @Field("trip_id") trip_id: Int,
     ): CancelTripResponse

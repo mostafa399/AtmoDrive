@@ -7,7 +7,7 @@ import com.mostafahelal.AtmoDrive.Utils.ISharedPreferencesManager
 import com.mostafahelal.AtmoDrive.Utils.LocationHelper
 import com.mostafahelal.AtmoDrive.Utils.NetworkState
 import com.mostafahelal.AtmoDrive.Utils.Resource
-import com.mostafahelal.AtmoDrive.maps.domain.model.ConfirmTrip
+import com.mostafahelal.AtmoDrive.maps.domain.model.CaptainDetails
 import com.mostafahelal.AtmoDrive.maps.domain.use_case.ITripUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,32 +19,32 @@ class TripViewModel @Inject constructor(
     private val iTripUseCase: ITripUseCase,
     private val iSharedPreferencesManager: ISharedPreferencesManager
 ): ViewModel() {
-    private val _makeTripResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val makeTripResult: StateFlow<NetworkState?> =_makeTripResult
+    private val _makeTrip: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val makeTrip: StateFlow<NetworkState?> =_makeTrip
 
     private val _confirmTrip: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val confirTrip: StateFlow<NetworkState?> =_confirmTrip
+    val confirmTrip: StateFlow<NetworkState?> =_confirmTrip
 
-    private val _cancelBeforeCaptainResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val cancelBeforeCaptainResult: StateFlow<NetworkState?> =_cancelBeforeCaptainResult
+    private val _cancelBeforeCaptain: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val cancelBeforeCaptain: StateFlow<NetworkState?> =_cancelBeforeCaptain
 
-    private val _getCaptainDetailsResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val getCaptainDetailsResult: StateFlow<NetworkState?> =_getCaptainDetailsResult
+    private val _getCaptainDetails: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val getCaptainDetails: StateFlow<NetworkState?> =_getCaptainDetails
 
-    private val _onTripResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val onTripResult: StateFlow<NetworkState?> =_onTripResult
+    private val _tripDetails: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val tripDetails: StateFlow<NetworkState?> =_tripDetails
 
-    private val _cancelTripResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val cancelTripResult: StateFlow<NetworkState?> =_cancelTripResult
+    private val _onTrip: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val onTrip: StateFlow<NetworkState?> =_onTrip
 
-    private val _tripDetailsResult: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
-    val tripDetailsResult: StateFlow<NetworkState?> =_tripDetailsResult
-    val tripId=Constants.tripId
+    private val _cancelTrip: MutableStateFlow<NetworkState?> = MutableStateFlow(null)
+    val cancelTrip: StateFlow<NetworkState?> =_cancelTrip
+
 
 
 
     fun makeTrip() {
-        _makeTripResult.value = NetworkState.LOADING
+        _makeTrip.value = NetworkState.LOADING
         viewModelScope.launch {
             val distance =
                 LocationHelper.getEstimatedDistance(Constants.pickUpLatLng!!, Constants.dropOffLatLng!!)
@@ -54,13 +54,13 @@ class TripViewModel @Inject constructor(
             try {
                 val result = iTripUseCase.makeTrip("$distance KM", distance * 1000, "$duration min", duration)
                 if (result.isSuccessful()){
-                    _makeTripResult.value = NetworkState.getLoaded(result)
+                    _makeTrip.value = NetworkState.getLoaded(result)
                 }else{
-                    _makeTripResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _makeTrip.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _makeTripResult.value = NetworkState.getErrorMessage(ex)
+                _makeTrip.value = NetworkState.getErrorMessage(ex)
             }
         }
     }
@@ -100,90 +100,93 @@ class TripViewModel @Inject constructor(
             }
         }
     }
-    fun saveData(response: Resource<ConfirmTrip>){
-        iSharedPreferencesManager.saveString(Constants.TRIPID,response.data?.tripId.toString())
-
-    }
-    fun cancelBeforeCaptain() {
-        _cancelBeforeCaptainResult.value = NetworkState.LOADING
+    fun cancelBeforeCaptain(tripid:Int) {
+        _cancelBeforeCaptain.value = NetworkState.LOADING
         viewModelScope.launch {
             try {
-                val result = iTripUseCase.cancelTripBeforeCaptainAccepts(tripId)
+                val result = iTripUseCase.cancelTripBeforeCaptainAccepts(tripid)
                 if (result.isSuccessful()){
-                    _cancelBeforeCaptainResult.value = NetworkState.getLoaded(result)
+                    _cancelBeforeCaptain.value = NetworkState.getLoaded(result)
                 }else{
-                    _cancelBeforeCaptainResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _cancelBeforeCaptain.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _cancelBeforeCaptainResult.value = NetworkState.getErrorMessage(ex)
+                _cancelBeforeCaptain.value = NetworkState.getErrorMessage(ex)
             }
         }
     }
-    fun getCaptainDetails() {
-        _getCaptainDetailsResult.value = NetworkState.LOADING
+    fun getCaptainDetails(tripId:Int) {
+        _getCaptainDetails.value = NetworkState.LOADING
         viewModelScope.launch {
             try {
 
                 val result = iTripUseCase.getCaptainDetails(tripId)
-                if (result.isSuccessful()){
-                    _getCaptainDetailsResult.value = NetworkState.getLoaded(result)
+                if (result.data?.status!!){
+                    _getCaptainDetails.value = NetworkState.getLoaded(result)
+                    saveData(result)
                 }else{
-                    _getCaptainDetailsResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _getCaptainDetails.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _getCaptainDetailsResult.value = NetworkState.getErrorMessage(ex)
+                _getCaptainDetails.value = NetworkState.getErrorMessage(ex)
             }
         }
     }
-    fun cancelTrip() {
-        _cancelTripResult.value = NetworkState.LOADING
+    fun cancelTrip(tripId:Int){
+        _cancelTrip.value = NetworkState.LOADING
         viewModelScope.launch {
             try {
                 val result = iTripUseCase.cancelTrip(tripId)
                 if (result.isSuccessful()){
-                    _cancelTripResult.value = NetworkState.getLoaded(result)
+                    _cancelTrip.value = NetworkState.getLoaded(result)
                 }else{
-                    _cancelTripResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _cancelTrip.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _cancelTripResult.value = NetworkState.getErrorMessage(ex)
+                _cancelTrip.value = NetworkState.getErrorMessage(ex)
             }
         }
     }
-    fun getTripDetails() {
-        _tripDetailsResult.value = NetworkState.LOADING
+    fun getTripDetails(tripId:Int){
+        _tripDetails.value = NetworkState.LOADING
         viewModelScope.launch {
             try {
                 val result = iTripUseCase.getTripDetails(tripId)
                 if (result.isSuccessful()){
-                    _tripDetailsResult.value = NetworkState.getLoaded(result)
+                    _tripDetails.value = NetworkState.getLoaded(result)
                 }else{
-                    _tripDetailsResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _tripDetails.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _tripDetailsResult.value = NetworkState.getErrorMessage(ex)
+                _tripDetails.value = NetworkState.getErrorMessage(ex)
             }
         }
     }
     fun onTrip() {
-        _onTripResult.value = NetworkState.LOADING
+        _onTrip.value = NetworkState.LOADING
         viewModelScope.launch {
             try {
                 val result = iTripUseCase.onTrip()
                 if (result.isSuccessful()){
-                    _onTripResult.value = NetworkState.getLoaded(result)
+                    _onTrip.value = NetworkState.getLoaded(result)
                 }else{
-                    _onTripResult.value = NetworkState.getErrorMessage(result.message.toString())
+                    _onTrip.value = NetworkState.getErrorMessage(result.message.toString())
                 }
             }catch (ex:Exception){
                 ex.printStackTrace()
-                _onTripResult.value = NetworkState.getErrorMessage(ex)
+                _onTrip.value = NetworkState.getErrorMessage(ex)
             }
         }
+    }
+    fun saveData(response: Resource<CaptainDetails>){
+        iSharedPreferencesManager.saveString(Constants.CaptainName,response.data?.cap?.fullName)
+        iSharedPreferencesManager.saveString(Constants.CaptainCost, response.data?.cap?.estimateCost.toString())
+        iSharedPreferencesManager.saveString(Constants.CaptainMobile,response.data?.cap?.mobile)
+        iSharedPreferencesManager.saveString(Constants.CAptainAvatar,response.data?.cap?.avatar)
     }
 
 }

@@ -99,17 +99,17 @@ class LoginFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
     private fun observeSendCodeResult() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.sendCodeResult.collect { networkState ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+            viewModel.sendCodeResult.collect { networkState ->
                     when (networkState?.status) {
                         NetworkState.Status.SUCCESS -> {
                             val phone = loginBinding.phone.editableText.toString()
-                            withContext(Dispatchers.Main){
+
                             val action = LoginFragmentDirections.actionLoginFragmentToVerifyFragment("0$phone")
                             findNavController().navigate(action)
                                   loginBinding.pb.visibilityGone()
-                        }
+
                         }
                         NetworkState.Status.FAILED -> {
                             Log.d("LoginFragment", networkState.msg.toString())
@@ -124,9 +124,9 @@ class LoginFragment : Fragment() {
                         else -> Unit
                     }
                 }
-            }
+
         }
 
-    }
+    }}
 
 }
